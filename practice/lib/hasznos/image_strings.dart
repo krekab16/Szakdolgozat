@@ -1,0 +1,1 @@
+String welcomeImage = "assets/imgs/welcome.jpg";
