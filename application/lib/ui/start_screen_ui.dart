@@ -3,7 +3,7 @@ import '../utils/colors.dart';
 import '../utils/image_strings.dart';
 import '../utils/styles.dart';
 import '../utils/text_strings.dart';
-import '../utils/button_style.dart';
+import '../utils/my_button_style.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class StartScreen extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.only(
-                left: 50, top: 250, right: 50, bottom: 90),
+                left: 20, top: 250, right: 20, bottom: 90),
             child: Column(
               children: [
                 Row(children: [
@@ -26,12 +26,10 @@ class StartScreen extends StatelessWidget {
                   ),
                   Text(
                     appName,
-                    style: Styles.nameStyles,
+                    style: Styles.welcomeApplicationNameStyle,
                   ),
                 ]),
-                const Spacer(
-                  flex: 2,
-                ),
+                const Padding(padding: EdgeInsets.all(10)),
                 Text(
                   welcomeTitle,
                   style: Styles.welcomeTitleStyles,
@@ -42,14 +40,12 @@ class StartScreen extends StatelessWidget {
                   style: Styles.welcomeSubTitleStyles,
                   textAlign: TextAlign.center,
                 ),
+                const Padding(padding: EdgeInsets.all(10)),
+                MyButtonStyle(signUp),
                 const Spacer(
                   flex: 2,
                 ),
-                MyButton(signUp),
-                const Spacer(
-                  flex: 2,
-                ),
-                MyButton(logIn),
+                MyButtonStyle(logIn),
               ],
             ),
           ),

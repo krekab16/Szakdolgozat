@@ -5,23 +5,22 @@ class Styles {
   static const String handleeFont = 'Handlee';
   static const String robotoFont = 'Roboto';
 
-  //a tehén melletti szöveg
-  static const TextStyle nameStyles = TextStyle(
+  static const TextStyle welcomeApplicationNameStyle = TextStyle(
     fontFamily: handleeFont,
+    fontSize: 60,
     color: MyColors.darkBlueColor,
-    fontSize: 40,
   );
 
   static const TextStyle welcomeTitleStyles = TextStyle(
     fontFamily: robotoFont,
-    color: MyColors.textColor,
     fontSize: 40,
+    color: MyColors.textColor,
   );
 
   static const TextStyle welcomeSubTitleStyles = TextStyle(
     fontFamily: robotoFont,
-    color: MyColors.textColor,
     fontSize: 20,
+    color: MyColors.textColor,
   );
 
   static const TextStyle buttonStyles = TextStyle(
@@ -32,11 +31,19 @@ class Styles {
 
   static const TextStyle textStyles = TextStyle(
     fontFamily: robotoFont,
+    fontSize: 18,
+    color: MyColors.textColor,
+  );
+
+  static const TextStyle rememberStyles = TextStyle(
+    fontFamily: robotoFont,
+    fontSize: 16,
     color: MyColors.textColor,
   );
 
   static const TextStyle eventTitleStyles = TextStyle(
     fontFamily: robotoFont,
     fontSize: 20,
+    color: MyColors.textColor,
   );
 }

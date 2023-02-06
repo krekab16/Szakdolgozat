@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
       title: 'eventify',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-
       ),
       home: StartScreen(),
     );
