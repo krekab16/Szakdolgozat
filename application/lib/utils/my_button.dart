@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
-class MyButtonStyle extends StatelessWidget {
+class MyButton extends StatelessWidget {
   final String reg;
 
-  const MyButtonStyle(this.reg, {super.key});
+  const MyButton(this.reg, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        flex: 5,
+        flex: 1,
         child: SizedBox(
           width: 300,
           child: ElevatedButton(
