@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../utils/colors.dart';
 
-class SignBox extends StatelessWidget {
+class InputBox extends StatelessWidget {
   final Widget fieldIcon;
   final String fieldText;
 
-  const SignBox(this.fieldIcon, this.fieldText);
+  const InputBox(this.fieldIcon, this.fieldText);
 
   @override
   Widget build(BuildContext context) {

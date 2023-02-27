@@ -1,4 +1,4 @@
-import 'package:application/utils/sign_box.dart';
+import 'package:application/utils/input_box.dart';
 import 'package:flutter/material.dart';
 import '../utils/colors.dart';
 import '../utils/my_button.dart';
@@ -15,8 +15,9 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _radioValue = true;
-  final viewModel = SignUpViewModel();
+  bool _isOrganizerUser = true;
+  bool _isUser = false;
+  final signUpViewModel = SignUpViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -37,25 +38,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    SignBox(
+                    InputBox(
                       const Icon(
                         Icons.account_circle,
                       ),
                       fullName,
                     ),
-                    SignBox(
+                    InputBox(
                       const Icon(
                         Icons.account_circle,
                       ),
                       userName,
                     ),
-                    SignBox(
+                    InputBox(
                       const Icon(
                         Icons.mail,
                       ),
                       email,
                     ),
-                    SignBox(
+                    InputBox(
                       const Icon(
                         Icons.vpn_key,
                       ),
@@ -66,23 +67,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       style: Styles.textStyles,
                     ),
                     RadioListTile(
-                      title: const Text('Igen'),
+                      title: Text(radioTitleYes),
                       value: true,
-                      groupValue: _radioValue,
+                      groupValue: _isOrganizerUser,
                       onChanged: (value) {
                         setState(() {
-                          _radioValue = value!;
+                          _isOrganizerUser = value!;
                         });
                       },
                     ),
                     RadioListTile(
-                      title: const Text('Nem'),
+                      title: Text(radioTitleNo),
                       value: false,
-                      groupValue: _radioValue,
+                      groupValue: _isOrganizerUser,
                       onChanged: (value) {
                         setState(
                           () {
-                            _radioValue = value!;
+                            _isOrganizerUser = value!;
                           },
                         );
                       },
@@ -91,11 +92,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       padding: const EdgeInsets.all(5),
                       child: MyButton(logIn, () {
                         if (_formKey.currentState!.validate()) {
-                          if (viewModel.navigateToAdminHome) {
-                            Navigator.pushNamed(context, '/admin_home');
-                          } else if (viewModel.navigateToHome) {
-                            Navigator.pushNamed(context, '/home');
-                          }
+                          signUpViewModel.NavigateToSpecificHomeScreen(
+                              _isOrganizerUser, context);
                         }
                       }),
                     ),

@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import '../utils/route_constants.dart';
 
 class SignUpViewModel with ChangeNotifier {
-  bool navigateToAdminHome = false;
-  bool navigateToHome = false;
-  
-  void choice(bool value) {
-    if (value) {
-      navigateToAdminHome = true;
-      navigateToHome = false;
+  void NavigateToSpecificHomeScreen(
+      bool isOrganizerUser, BuildContext context) {
+    if (isOrganizerUser) {
+      Navigator.pushNamed(context, organizerHomeRoute);
     } else {
-      navigateToAdminHome = false;
-      navigateToHome = true;
+      Navigator.pushNamed(context, homeRoute);
     }
   }
 }
