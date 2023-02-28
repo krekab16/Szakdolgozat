@@ -16,7 +16,6 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isOrganizerUser = true;
-  bool _isUser = false;
   final signUpViewModel = SignUpViewModel();
 
   @override
