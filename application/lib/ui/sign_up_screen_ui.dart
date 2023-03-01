@@ -98,6 +98,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         });
                       },
                     ),
+                    if (signUpViewModel.errorMessages.isNotEmpty)
+                      Text(
+                        signUpViewModel.errorMessages.join(" "),
+                        style: const TextStyle(color: Colors.red),
+                      ),
                     Padding(
                       padding: const EdgeInsets.all(5),
                       child: MyButton(signUp, () async {
