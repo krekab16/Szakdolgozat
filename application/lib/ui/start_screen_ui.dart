@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../business_logic/start_screen_view_model.dart';
+import '../viewmodel//start_screen_view_model.dart';
 import '../utils/colors.dart';
 import '../utils/image_strings.dart';
 import '../utils/styles.dart';

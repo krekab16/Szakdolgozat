@@ -1,6 +1,7 @@
 import 'package:application/ui/log_in_screen_ui.dart';
 import 'package:application/ui/sign_up_screen_ui.dart';
 import 'package:application/ui/start_screen_ui.dart';
+import 'package:application/utils/route_constants.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,9 +20,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const StartScreen(),
       routes: {
-        '/start': (context) => const StartScreen(),
-        '/signup': (context) => const SignUpScreen(),
-        '/login': (context) => const LogInScreen(),
+        startRoute : (context) => const StartScreen(),
+        signUpRoute : (context) => const SignUpScreen(),
+        logInRoute : (context) => const LogInScreen(),
       },
     );
   }

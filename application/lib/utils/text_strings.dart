@@ -11,3 +11,5 @@ String eventsChechBox = "Szeretne saját eseményeket létrehozni?";
 String forgetPassword = "Elfelejtette a jelszavát?";
 String rememberMe = "Emlékezzen rám";
 String eventHome = "Események";
+String radioTitleYes = 'Igen';
+String radioTitleNo= 'Nem';
