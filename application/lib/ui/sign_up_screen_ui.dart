@@ -96,9 +96,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         });
                       },
                     ),
-                    if (signUpViewModel.error_messeges.isNotEmpty)
+                    if (signUpViewModel.errorMessages.isNotEmpty)
                       Text(
-                        signUpViewModel.error_messeges.join(" "),
+                        signUpViewModel.errorMessages.join(" "),
                         style: const TextStyle(color: Colors.red),
                       ),
                     Padding(
@@ -107,13 +107,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
                           await signUpViewModel.register();
-                          if (_formKey.currentState!.validate()) {
-                            signUpViewModel.NavigateToSpecificHomeScreen(
+                          if (signUpViewModel.errorMessages.isEmpty) {
+                            signUpViewModel.navigateToSpecificHomeScreen(
                                 _isOrganizerUser, context);
                           }
                         }
                       }),
-                    ),
+                    )
                   ],
                 ),
               ),

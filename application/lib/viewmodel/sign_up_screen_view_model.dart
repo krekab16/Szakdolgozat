@@ -1,23 +1,23 @@
-import 'package:application/model/user_model.dart';
+import 'package:application/model/user_dto.dart';
 import 'package:flutter/material.dart';
 import '../service/database_service.dart';
 import '../utils/route_constants.dart';
 import '../utils/text_strings.dart';
 
 class SignUpViewModel with ChangeNotifier {
-  final UserModel _user = UserModel();
+  final UserDTO _user = UserDTO();
   final AuthenticationService service = AuthenticationService();
-  List<String> error_messeges = List.empty();
+  List<String> errorMessages = [];
 
-  UserModel get name => _user;
+  UserDTO get name => _user;
 
-  UserModel get userName => _user;
+  UserDTO get userName => _user;
 
-  UserModel get email => _user;
+  UserDTO get email => _user;
 
-  UserModel get password => _user;
+  UserDTO get password => _user;
 
-  UserModel get organizer => _user;
+  UserDTO get isOrganizer => _user;
 
   void setname(String name) {
     _user.name = name;
@@ -25,7 +25,7 @@ class SignUpViewModel with ChangeNotifier {
   }
 
   void setUserName(String userName) {
-    _user.userName = userName;
+    _user.username = userName;
     notifyListeners();
   }
 
@@ -40,12 +40,11 @@ class SignUpViewModel with ChangeNotifier {
   }
 
   void setOrganizer(bool organizer) {
-    _user.organizer = organizer;
+    _user.isOrganizer = organizer;
     notifyListeners();
   }
 
-  void NavigateToSpecificHomeScreen(
-      bool isOrganizerUser, BuildContext context) {
+  void navigateToSpecificHomeScreen(bool isOrganizerUser, BuildContext context) {
     if (isOrganizerUser) {
       Navigator.pushNamed(context, organizerHomeRoute);
     } else {
@@ -55,9 +54,11 @@ class SignUpViewModel with ChangeNotifier {
 
   Future<void> register() async {
     try {
-      await service.registerUser(_user);
+      await service.addUserToDatabase(_user);
+      errorMessages.clear();
+      notifyListeners();
     } catch (e) {
-      error_messeges.add(e.toString());
+      errorMessages = [e.toString()];
       notifyListeners();
     }
   }
