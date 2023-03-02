@@ -5,7 +5,8 @@ import '../utils/route_constants.dart';
 import '../utils/text_strings.dart';
 
 class SignUpViewModel with ChangeNotifier {
-  final UserDTO _user = UserDTO();
+  final UserDTO _user = UserDTO(
+      name: '', username: '', email: '', password: '', isOrganizer: false);
   final AuthenticationService service = AuthenticationService();
   List<String> errorMessages = [];
 
@@ -44,7 +45,8 @@ class SignUpViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void navigateToSpecificHomeScreen(bool isOrganizerUser, BuildContext context) {
+  void navigateToSpecificHomeScreen(
+      bool isOrganizerUser, BuildContext context) {
     if (isOrganizerUser) {
       Navigator.pushNamed(context, organizerHomeRoute);
     } else {
