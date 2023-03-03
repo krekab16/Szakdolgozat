@@ -79,4 +79,10 @@ class Styles {
     fontSize: 20,
     color: MyColors.darkBlueColor,
   );
+
+  static const TextStyle errorText = TextStyle(
+    fontFamily: robotoFont,
+    fontSize: 20,
+    color: Colors.red,
+  );
 }

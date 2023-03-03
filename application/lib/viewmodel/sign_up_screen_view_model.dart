@@ -55,14 +55,13 @@ class SignUpViewModel with ChangeNotifier {
   }
 
   Future<void> register() async {
-    try {
-      await service.addUserToDatabase(_user);
-      errorMessages.clear();
-      notifyListeners();
-    } catch (e) {
-      errorMessages = [e.toString()];
-      notifyListeners();
+    String? errorMessage = await service.addUserToDatabase(_user);
+    if (errorMessage != null) {
+      errorMessages = [errorMessage];
+    } else {
+      errorMessages = [];
     }
+    notifyListeners();
   }
 
   String? validateName(String value) {

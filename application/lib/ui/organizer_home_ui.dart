@@ -10,6 +10,6 @@ class OrganizerHomeScreen extends StatefulWidget {
 class _OrganizerHomeScreenState extends State<OrganizerHomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Text("ORGANIZER HOME");
   }
 }

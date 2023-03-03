@@ -96,11 +96,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         });
                       },
                     ),
-                    if (signUpViewModel.errorMessages.isNotEmpty)
-                      Text(
-                        signUpViewModel.errorMessages.join(" "),
-                        style: const TextStyle(color: Colors.red),
-                      ),
                     Padding(
                       padding: const EdgeInsets.all(5),
                       child: MyButton(signUp, () async {
@@ -110,6 +105,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           if (signUpViewModel.errorMessages.isEmpty) {
                             signUpViewModel.navigateToSpecificHomeScreen(
                                 _isOrganizerUser, context);
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                      title: Text(
+                                        error,
+                                        style: Styles.errorText,
+                                      ),
+                                      content: Text(signUpViewModel
+                                          .errorMessages.join(" "),
+                                        style: Styles.errorText,
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: Text(close),
+                                        )
+                                      ],
+                                    )
+                            );
                           }
                         }
                       }),
