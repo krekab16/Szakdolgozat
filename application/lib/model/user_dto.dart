@@ -18,6 +18,7 @@ class UserDTO {
       'name': name,
       'username': username,
       'email': email,
+	  'password': password,
       'isOrganizer': isOrganizer,
     };
   }
