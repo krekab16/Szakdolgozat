@@ -8,17 +8,22 @@ class AuthenticationService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<String?> addUserToDatabase(UserDTO user) async {
-    QuerySnapshot querySnapshot = await _firestore
-        .collection('users')
-        .where('email', isEqualTo: user.email)
-        .get();
-    if (querySnapshot.docs.isNotEmpty) {
-      return thisEmailIsAlredyUsed;
-    } else {
-      UserCredential userCredential =
-          await _firebaseAuth.createUserWithEmailAndPassword(
-              email: user.email, password: user.password);
-      await _firestore.collection('users').add(user.toJson());
+    try {
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('users')
+          .where('email', isEqualTo: user.email)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        return thisEmailIsAlredyUsed;
+      } else {
+        UserCredential userCredential =
+        await _firebaseAuth.createUserWithEmailAndPassword(
+            email: user.email, password: user.password);
+        await _firestore.collection('users').doc(userCredential.user!.uid).set(user.toJson());
+        return null;
+      }
+    } on FirebaseException catch (e) {
+      return e.message;
     }
   }
 }
