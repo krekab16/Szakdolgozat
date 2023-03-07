@@ -1,26 +1,24 @@
-import 'package:application/model/user_dto.dart';
 import 'package:flutter/material.dart';
+import '../model/user_model.dart';
 import '../service/database_service.dart';
 import '../utils/route_constants.dart';
 import '../utils/text_strings.dart';
 
 class SignUpViewModel with ChangeNotifier {
-  final UserDTO _user = UserDTO(
+  final UserModel _user = UserModel(
       name: '', username: '', email: '', password: '', isOrganizer: false);
-  final AuthenticationService service = AuthenticationService();
+
+  final UserDatabaseService service = UserDatabaseService();
+
   List<String> errorMessages = [];
 
-  UserDTO get name => _user;
+  String get name => _user.name;
+  String get userName => _user.username;
+  String get email => _user.email;
+  String get password => _user.password;
+  bool get isOrganizer => _user.isOrganizer;
 
-  UserDTO get userName => _user;
-
-  UserDTO get email => _user;
-
-  UserDTO get password => _user;
-
-  UserDTO get isOrganizer => _user;
-
-  void setname(String name) {
+  void setName(String name) {
     _user.name = name;
     notifyListeners();
   }
@@ -45,21 +43,19 @@ class SignUpViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void navigateToSpecificHomeScreen(
-      bool isOrganizerUser, BuildContext context) {
-    if (isOrganizerUser) {
-      Navigator.pushNamed(context, organizerHomeRoute);
-    } else {
-      Navigator.pushNamed(context, homeRoute);
-    }
+  void navigateToHomeScreen(BuildContext context) {
+    Navigator.pushNamed(context, homeRoute);
   }
 
   Future<void> register() async {
-    String? errorMessage = await service.addUserToDatabase(_user);
-    if (errorMessage != null) {
-      errorMessages = [errorMessage];
-    } else {
-      errorMessages = [];
+    try{
+      await service.addUserToDatabase(_user.toDTO(_user));
+    }catch(e){
+      if(e.toString().isNotEmpty){
+        errorMessages = [e.toString()];
+      }else {
+        errorMessages = [];
+      }
     }
     notifyListeners();
   }

@@ -3,27 +3,29 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../model/user_dto.dart';
 import '../utils/text_strings.dart';
 
-class AuthenticationService {
+class UserDatabaseService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String?> addUserToDatabase(UserDTO user) async {
+  Future<void> addUserToDatabase(UserDTO userDTO) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
           .collection('users')
-          .where('email', isEqualTo: user.email)
+          .where('email', isEqualTo: userDTO.email)
           .get();
       if (querySnapshot.docs.isNotEmpty) {
-        return thisEmailIsAlredyUsed;
+        throw Exception(emailAlreadyUsedErrorMessage);
       } else {
         UserCredential userCredential =
-        await _firebaseAuth.createUserWithEmailAndPassword(
-            email: user.email, password: user.password);
-        await _firestore.collection('users').doc(userCredential.user!.uid).set(user.toJson());
-        return null;
+            await _firebaseAuth.createUserWithEmailAndPassword(
+                email: userDTO.email, password: userDTO.password);
+        await _firestore
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .set(userDTO.toJson());
       }
     } on FirebaseException catch (e) {
-      return e.message;
+      throw Exception(e.message);
     }
   }
 }

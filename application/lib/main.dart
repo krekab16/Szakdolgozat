@@ -1,6 +1,5 @@
 import 'package:application/ui/home_screen.dart';
 import 'package:application/ui/log_in_screen_ui.dart';
-import 'package:application/ui/organizer_home_ui.dart';
 import 'package:application/ui/sign_up_screen_ui.dart';
 import 'package:application/ui/start_screen_ui.dart';
 import 'package:application/utils/route_constants.dart';
@@ -34,12 +33,11 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: StartScreen(),
+        home: const StartScreen(),
         routes: {
           startRoute: (context) => const StartScreen(),
           signUpRoute: (context) => const SignUpScreen(),
           logInRoute: (context) => const LogInScreen(),
-          organizerHomeRoute: (context) => const OrganizerHomeScreen(),
           homeRoute: (context) => const HomeScreen(),
         },
       ),

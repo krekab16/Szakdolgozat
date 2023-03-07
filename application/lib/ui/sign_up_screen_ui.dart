@@ -43,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Icons.account_circle,
                       ),
                       fullName,
-                      (name) => signUpViewModel.setname(name),
+                      (name) => signUpViewModel.setName(name),
                       (value) => signUpViewModel.validateName(value!),
                     ),
                     InputBox(
@@ -103,18 +103,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           _formKey.currentState?.save();
                           await signUpViewModel.register();
                           if (signUpViewModel.errorMessages.isEmpty) {
-                            signUpViewModel.navigateToSpecificHomeScreen(
-                                _isOrganizerUser, context);
+                            signUpViewModel.navigateToHomeScreen(context);
                           } else {
                             showDialog(
                                 context: context,
                                 builder: (_) => AlertDialog(
                                       title: Text(
-                                        error,
+                                        errorDialogTitle,
                                         style: Styles.errorText,
                                       ),
-                                      content: Text(signUpViewModel
-                                          .errorMessages.join(" "),
+                                      content: Text(
+                                        signUpViewModel.errorMessages.join(" "),
                                         style: Styles.errorText,
                                       ),
                                       actions: [
@@ -124,8 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           child: Text(close),
                                         )
                                       ],
-                                    )
-                            );
+                                    ));
                           }
                         }
                       }),

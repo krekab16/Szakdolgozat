@@ -18,8 +18,18 @@ class UserDTO {
       'name': name,
       'username': username,
       'email': email,
-	  'password': password,
+      'password': password,
       'isOrganizer': isOrganizer,
     };
+  }
+
+  factory UserDTO.fromJson(Map<String, dynamic> json) {
+    return UserDTO(
+      name: json['name'],
+      username: json['username'],
+      email: json['email'],
+      password: json['password'],
+      isOrganizer: json['isOrganizer'],
+    );
   }
 }
