@@ -47,39 +47,6 @@ class Styles {
     color: Colors.grey,
   );
 
-  static const TextStyle eventTitleStyles = TextStyle(
-    fontFamily: robotoFont,
-    fontSize: 30,
-    fontWeight: FontWeight.bold,
-    color: MyColors.darkBlueColor,
-  );
-
-  static const TextStyle menuTextStyles = TextStyle(
-    fontFamily: robotoFont,
-    fontSize: 40,
-    fontWeight: FontWeight.bold,
-    color: MyColors.darkBlueColor,
-  );
-
-  static const TextStyle eventText = TextStyle(
-    fontFamily: robotoFont,
-    fontSize: 18,
-    fontWeight: FontWeight.bold,
-    color: MyColors.textColor,
-  );
-
-  static const TextStyle drawerText = TextStyle(
-    fontFamily: robotoFont,
-    fontSize: 20,
-    color: MyColors.darkBlueColor,
-  );
-
-  static const TextStyle dateTimeText = TextStyle(
-    fontFamily: robotoFont,
-    fontSize: 20,
-    color: MyColors.darkBlueColor,
-  );
-
   static const TextStyle errorText = TextStyle(
     fontFamily: robotoFont,
     fontSize: 20,

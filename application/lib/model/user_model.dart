@@ -15,13 +15,13 @@ class UserModel {
     required this.isOrganizer,
   });
 
-  UserDTO toDTO(UserModel userModel) {
+  UserDTO toDTO() {
     return UserDTO(
-      name: userModel.name,
-      username: userModel.username,
-      email: userModel.email,
-      password: userModel.password,
-      isOrganizer: userModel.isOrganizer,
+      name: name,
+      username: username,
+      email: email,
+      password: password,
+      isOrganizer: isOrganizer,
     );
   }
 

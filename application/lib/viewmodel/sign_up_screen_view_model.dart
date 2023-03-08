@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../model/user_model.dart';
-import '../service/database_service.dart';
+import '../service/user_database_service.dart';
 import '../utils/route_constants.dart';
 import '../utils/text_strings.dart';
 
@@ -12,11 +12,21 @@ class SignUpViewModel with ChangeNotifier {
 
   List<String> errorMessages = [];
 
-  String get name => _user.name;
-  String get userName => _user.username;
-  String get email => _user.email;
-  String get password => _user.password;
-  bool get isOrganizer => _user.isOrganizer;
+  String getName() {
+    return _user.name;
+  }
+
+  String getEmail() {
+    return _user.email;
+  }
+
+  String getPassword() {
+    return _user.password;
+  }
+
+  bool getIsOrganizer() {
+    return _user.isOrganizer;
+  }
 
   void setName(String name) {
     _user.name = name;
@@ -48,13 +58,14 @@ class SignUpViewModel with ChangeNotifier {
   }
 
   Future<void> register() async {
-    try{
-      await service.addUserToDatabase(_user.toDTO(_user));
-    }catch(e){
-      if(e.toString().isNotEmpty){
+    try {
+      await service.addUserToDatabase(_user.toDTO());
+      errorMessages = [];
+    } catch (e) {
+      if (e.toString().isNotEmpty) {
         errorMessages = [e.toString()];
-      }else {
-        errorMessages = [];
+      } else {
+        errorMessages = [standardErrorMessage];
       }
     }
     notifyListeners();
