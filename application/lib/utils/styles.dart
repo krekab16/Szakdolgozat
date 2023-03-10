@@ -35,18 +35,6 @@ class Styles {
     color: MyColors.textColor,
   );
 
-  static const TextStyle rememberStyles = TextStyle(
-    fontFamily: robotoFont,
-    fontSize: 16,
-    color: MyColors.textColor,
-  );
-
-  static const TextStyle forgotPasswordStyles = TextStyle(
-    fontFamily: robotoFont,
-    fontSize: 13,
-    color: Colors.grey,
-  );
-
   static const TextStyle errorText = TextStyle(
     fontFamily: robotoFont,
     fontSize: 20,
