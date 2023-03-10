@@ -35,15 +35,9 @@ class Styles {
     color: MyColors.textColor,
   );
 
-  static const TextStyle rememberStyles = TextStyle(
-    fontFamily: robotoFont,
-    fontSize: 16,
-    color: MyColors.textColor,
-  );
-
-  static const TextStyle eventTitleStyles = TextStyle(
+  static const TextStyle errorText = TextStyle(
     fontFamily: robotoFont,
     fontSize: 20,
-    color: MyColors.textColor,
+    color: Colors.red,
   );
 }

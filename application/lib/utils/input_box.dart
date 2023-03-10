@@ -4,8 +4,10 @@ import '../utils/colors.dart';
 class InputBox extends StatelessWidget {
   final Widget fieldIcon;
   final String fieldText;
+  final dynamic Function(String)? onChanged;
+  final String? Function(String?)? validator;
 
-  const InputBox(this.fieldIcon, this.fieldText);
+  const InputBox(this.fieldIcon, this.fieldText, this.onChanged, this.validator,{super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,8 @@ class InputBox extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
         keyboardType: TextInputType.name,
-        onSaved: (value) {},
+        onChanged: onChanged,
+        validator: validator,
         decoration: InputDecoration(
           prefixIcon: fieldIcon,
           label: Text(
@@ -30,5 +33,6 @@ class InputBox extends StatelessWidget {
         ),
       ),
     );
+
   }
 }
