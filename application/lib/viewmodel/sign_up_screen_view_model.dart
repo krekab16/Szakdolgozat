@@ -1,12 +1,18 @@
+import 'dart:core';
+import 'package:application/model/user_model.dart';
 import 'package:flutter/material.dart';
-import '../model/user_model.dart';
 import '../service/user_database_service.dart';
 import '../utils/route_constants.dart';
 import '../utils/text_strings.dart';
 
 class SignUpViewModel with ChangeNotifier {
+
   final UserModel _user = UserModel(
-      name: '', username: '', email: '', password: '', isOrganizer: false);
+      name: '',
+      username: '',
+      email: '',
+      password: '',
+      isOrganizer: false);
 
   final UserDatabaseService service = UserDatabaseService();
 
