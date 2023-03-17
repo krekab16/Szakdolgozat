@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../model/user_model.dart';
-import '../service/user_database_service.dart';
 import '../utils/route_constants.dart';
 import '../utils/text_strings.dart';
 
@@ -10,19 +8,19 @@ class LogInViewModel with ChangeNotifier {
   }
 
   String? validateEmail(String value) {
-    if (!value.contains("@") && value.isNotEmpty) {
-      return wrong_email;
-    } else if (value.isEmpty) {
+    if (value.isEmpty) {
       return mustEnterEmail;
+    } else if (!value.contains("@")) {
+      return wrong_email;
     }
     return null;
   }
 
   String? validatePassword(String value) {
-    if (value.length < 6 && value.isNotEmpty) {
-      return validate_password;
-    } else if (value.isEmpty) {
+    if (value.isEmpty) {
       return mustEnterPassword;
+    } else if (value.length < 6) {
+      return validate_password;
     }
     return null;
   }
