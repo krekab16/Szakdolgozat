@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:application/utils/input_box.dart';
+import 'package:provider/provider.dart';
+import '../utils/colors.dart';
+import '../utils/my_button.dart';
+import '../utils/styles.dart';
+import '../utils/text_strings.dart';
+import '../viewmodel/log_in_screen_view_model.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
@@ -8,8 +15,64 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreen extends State<LogInScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return Text("LogIn");
+    final logInViewModel = Provider.of<LogInViewModel>(context);
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => {Navigator.pop(context)},
+        ),
+        backgroundColor: MyColors.lightBlueColor,
+        title: Text(
+          logIn,
+          style: Styles.textStyles,
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            children: [
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    InputBox(
+                      const Icon(
+                        Icons.mail,
+                      ),
+                      email,
+                          (email) => {},
+                          (value) => logInViewModel.validateEmail(value!),
+                    ),
+                    InputBox(
+                      const Icon(
+                        Icons.vpn_key,
+                      ),
+                      password,
+                          (password) => {},
+                          (value) => logInViewModel.validatePassword(value!),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: MyButton(logIn, () async {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState?.save();
+                          logInViewModel.navigateToHome(context);
+                        }
+                      }),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
