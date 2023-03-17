@@ -79,32 +79,32 @@ class SignUpViewModel with ChangeNotifier {
 
   String? validateName(String value) {
     if (value.isEmpty) {
-      return mustEnterName;
+      return mustEnterNameErrorMessage;
     }
     return null;
   }
 
   String? validateUserName(String value) {
     if (value.isEmpty) {
-      return mustEnterUsername;
+      return mustEnterUsernameErrorMessage;
     }
     return null;
   }
 
   String? validateEmail(String value) {
     if (!value.contains("@") && value.isNotEmpty) {
-      return wrong_email;
+      return wrongEmailErrorMessage;
     } else if (value.isEmpty) {
-      return mustEnterEmail;
+      return mustEnterEmailErrorMessage;
     }
     return null;
   }
 
   String? validatePassword(String value) {
     if (value.length < 6 && value.isNotEmpty) {
-      return validate_password;
+      return validatePasswordErrorMessage;
     } else if (value.isEmpty) {
-      return mustEnterPassword;
+      return mustEnterPasswordErrorMessage;
     }
     return null;
   }

@@ -46,7 +46,7 @@ class _LogInScreen extends State<LogInScreen> {
                         Icons.mail,
                       ),
                       email,
-                          (email) => {},
+                          (email) => logInViewModel.setEmail(email),
                           (value) => logInViewModel.validateEmail(value!),
                     ),
                     InputBox(
@@ -54,7 +54,7 @@ class _LogInScreen extends State<LogInScreen> {
                         Icons.vpn_key,
                       ),
                       password,
-                          (password) => {},
+                          (password) => logInViewModel.setPassword(password),
                           (value) => logInViewModel.validatePassword(value!),
                     ),
                     Padding(
@@ -62,7 +62,30 @@ class _LogInScreen extends State<LogInScreen> {
                       child: MyButton(logIn, () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
-                          logInViewModel.navigateToHome(context);
+                          await logInViewModel.login();
+                          if (logInViewModel.errorMessages.isEmpty) {
+                            logInViewModel.navigateToHome(context);
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: Text(
+                                    errorDialogTitle,
+                                    style: Styles.errorText,
+                                  ),
+                                  content: Text(
+                                    logInViewModel.errorMessages.join(" "),
+                                    style: Styles.errorText,
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context),
+                                      child: Text(close),
+                                    )
+                                  ],
+                                ));
+                          }
                         }
                       }),
                     )

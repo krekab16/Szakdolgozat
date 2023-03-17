@@ -28,4 +28,35 @@ class UserDatabaseService {
       throw Exception(e.message);
     }
   }
+
+  Future<void> logInUser(UserDTO userDTO) async {
+    try {
+      UserCredential userCredential =
+      await _firebaseAuth.signInWithEmailAndPassword(
+        email: userDTO.email,
+        password: userDTO.password,
+      );
+      DocumentSnapshot userSnapshot = await _firestore
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .get();
+      if (userSnapshot.exists && userSnapshot.data() != null) {
+        UserDTO userDTO =
+        UserDTO.fromJson(userSnapshot.data() as Map<String, dynamic>);
+      } else {
+        throw Exception(userNotFoundErrorMessage);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == userNotFound) {
+        throw Exception(userNotFoundErrorMessage);
+      } else if (e.code == wrongPassword) {
+        throw Exception(wrongPasswordErrorMessage);
+      } else {
+        throw Exception(tryLaterErrorMessage);
+      }
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
 }
