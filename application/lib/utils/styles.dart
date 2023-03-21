@@ -40,4 +40,12 @@ class Styles {
     fontSize: 20,
     color: Colors.red,
   );
+
+  static const TextStyle eventBoxText = TextStyle(
+    fontFamily: robotoFont,
+    fontSize: 25,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+    decoration: TextDecoration.underline,
+  );
 }
