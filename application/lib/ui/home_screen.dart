@@ -21,7 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
     homeViewModel.fetchEvents();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
@@ -35,9 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.location_on),
-            onPressed: () {
-              // térkép megnyitás
-            },
+            onPressed: () {},
           ),
         ],
       ),
