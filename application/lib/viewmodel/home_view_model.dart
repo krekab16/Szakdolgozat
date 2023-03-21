@@ -9,6 +9,10 @@ class HomeViewModel with ChangeNotifier {
 
   final EventDatabaseService service = EventDatabaseService();
 
+  HomeViewModel(){
+    fetchEvents();
+  }
+
   Future<void> fetchEvents() async {
     try {
       final List<EventDTO> eventDTO = await service.getEvents();
