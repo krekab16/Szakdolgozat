@@ -39,9 +39,17 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: Column(
-                children: homeViewModel.homeModel.events
-                    .map((event) => EventBox(event))
-                    .toList(),
+                children: [
+                  if(homeViewModel.errorMessages.isNotEmpty)...[
+                    Text(homeViewModel.errorMessages.join(' ')),
+                  ]else...[
+                    Column(
+                      children: homeViewModel.homeModel.events
+                          .map((event) => EventBox(event))
+                          .toList(),
+                    )
+                  ]
+                ]
               ),
             ),
           ],
