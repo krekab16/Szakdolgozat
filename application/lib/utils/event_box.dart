@@ -32,11 +32,11 @@ class _EventBoxState extends State<EventBox> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const EventScreen(),
+                      builder: (context) => EventScreen(),
                     ),
                   );
                 },
-                child: Image.asset(
+                child: Image.network(
                   widget.eventModel.image,
                   height: 250,
                   width: double.infinity,

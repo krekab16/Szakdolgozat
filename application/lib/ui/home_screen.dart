@@ -14,6 +14,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
+    homeViewModel.fetchEvents();
+  }
 
 
   @override
