@@ -10,10 +10,10 @@ class HomeViewModel with ChangeNotifier {
 
   final EventDatabaseService service = EventDatabaseService();
 
-
   List<String> errorMessages = [];
 
-  HomeViewModel() {
+
+  HomeViewModel(){
     fetchEvents();
   }
 
