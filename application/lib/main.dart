@@ -30,7 +30,6 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => SignUpViewModel()),
         ChangeNotifierProvider(create: (_) => LogInViewModel()),
-        ChangeNotifierProvider(create: (_) => HomeViewModel()),
       ],
       child: MaterialApp(
         title: 'eventify',
@@ -42,7 +41,9 @@ class _MyAppState extends State<MyApp> {
           startRoute: (context) => const StartScreen(),
           signUpRoute: (context) => const SignUpScreen(),
           logInRoute: (context) => const LogInScreen(),
-          homeRoute: (context) => const HomeScreen(),
+          homeRoute: (context) => ChangeNotifierProvider(
+              create: (context) => HomeViewModel(),
+              child: const HomeScreen()),
         },
       ),
     );

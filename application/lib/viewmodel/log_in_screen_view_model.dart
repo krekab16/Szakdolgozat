@@ -43,7 +43,7 @@ class LogInViewModel with ChangeNotifier {
   }
 
   void navigateToHome(BuildContext context) {
-    Navigator.pushReplacementNamed(context, homeRoute);
+    Navigator.pushNamed(context, homeRoute);
   }
 
   String? validateEmail(String value) {

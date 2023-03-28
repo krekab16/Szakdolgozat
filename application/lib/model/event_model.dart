@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'event_dto.dart';
+
 class EventModel {
   String name;
   String city;
@@ -17,5 +20,27 @@ class EventModel {
     required this.description,
   });
 
+  EventDTO toDTO() {
+    return EventDTO(
+      name: name,
+      city: city,
+      category: category,
+      date: Timestamp.fromDate(date),
+      image: image,
+      stuffLimit: stuffLimit,
+      description: description,
+    );
+  }
 
+  factory EventModel.fromDTO(EventDTO eventDTO) {
+    return EventModel(
+      name: eventDTO.name,
+      city: eventDTO.city,
+      category: eventDTO.category,
+      date: eventDTO.date.toDate(),
+      image: eventDTO.image,
+      stuffLimit: eventDTO.stuffLimit,
+      description: eventDTO.description,
+    );
+  }
 }
