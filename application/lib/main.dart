@@ -1,14 +1,17 @@
+import 'package:application/ui/event_screen_ui.dart';
 import 'package:application/ui/home_screen.dart';
 import 'package:application/ui/log_in_screen_ui.dart';
 import 'package:application/ui/sign_up_screen_ui.dart';
 import 'package:application/ui/start_screen_ui.dart';
 import 'package:application/utils/route_constants.dart';
+import 'package:application/viewmodel/event_view_model.dart';
 import 'package:application/viewmodel/home_view_model.dart';
 import 'package:application/viewmodel/log_in_screen_view_model.dart';
 import 'package:application/viewmodel/sign_up_screen_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'model/event_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +33,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => SignUpViewModel()),
         ChangeNotifierProvider(create: (_) => LogInViewModel()),
+        ChangeNotifierProvider(create: (_) => EventViewModel()),
       ],
       child: MaterialApp(
         title: 'eventify',
@@ -44,7 +48,17 @@ class _MyAppState extends State<MyApp> {
           homeRoute: (context) => ChangeNotifierProvider(
               create: (context) => HomeViewModel(),
               child: const HomeScreen()),
+          eventRoute: (context) => ChangeNotifierProvider(
+            create: (context) => EventViewModel(),
+            child: Builder(
+              builder: (BuildContext context) {
+                EventModel eventModel = Provider.of<EventModel>(context);
+                return EventScreen(eventModel);
+              },
+            ),
+          ),
         },
+
       ),
     );
   }

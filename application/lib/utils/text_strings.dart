@@ -26,3 +26,4 @@ String wrongPasswordErrorMessage = "Helytelen jelszó a megadott email címhez!"
 String tryLaterErrorMessage = "Valami hiba történt, kérem próbálja meg később!";
 String userNotFound = "user-not-found";
 String wrongPassword = "wrong-password";
+String participation = "Részvétel";
