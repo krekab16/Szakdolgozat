@@ -46,19 +46,18 @@ class _MyAppState extends State<MyApp> {
           signUpRoute: (context) => const SignUpScreen(),
           logInRoute: (context) => const LogInScreen(),
           homeRoute: (context) => ChangeNotifierProvider(
-              create: (context) => HomeViewModel(),
-              child: const HomeScreen()),
+              create: (context) => HomeViewModel(), child: const HomeScreen()),
           eventRoute: (context) => ChangeNotifierProvider(
-            create: (context) => EventViewModel(),
-            child: Builder(
-              builder: (BuildContext context) {
-                EventModel eventModel = Provider.of<EventModel>(context);
-                return EventScreen(eventModel);
-              },
-            ),
-          ),
+              create: (context) => EventViewModel(),
+              child: EventScreen(EventModel(
+                  name: '',
+                  city: '',
+                  category: '',
+                  date: DateTime.now(),
+                  image: '',
+                  stuffLimit: 0,
+                  description: ''))),
         },
-
       ),
     );
   }
