@@ -12,7 +12,6 @@ class HomeViewModel with ChangeNotifier {
 
   List<String> errorMessages = [];
 
-
   HomeViewModel(){
     fetchEvents();
   }
@@ -33,5 +32,4 @@ class HomeViewModel with ChangeNotifier {
     }
     notifyListeners();
   }
-
 }

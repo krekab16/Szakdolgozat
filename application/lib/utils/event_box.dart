@@ -32,7 +32,7 @@ class _EventBoxState extends State<EventBox> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EventScreen(),
+                      builder: (context) => EventScreen(widget.eventModel),
                     ),
                   );
                 },

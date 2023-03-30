@@ -48,4 +48,37 @@ class Styles {
     color: Colors.white,
     decoration: TextDecoration.underline,
   );
+
+  static const TextStyle eventTitleStyle = TextStyle(
+    fontFamily: robotoFont,
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+    decoration: TextDecoration.underline,
+  );
+
+  static const TextStyle eventCategoryStyle = TextStyle(
+    fontFamily: robotoFont,
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+
+  static const TextStyle eventCityStyle = TextStyle(
+    fontFamily: robotoFont,
+    fontSize: 20,
+    color: MyColors.textColor,
+  );
+
+  static const TextStyle eventDateStyle = TextStyle(
+    fontFamily: robotoFont,
+    fontSize: 20,
+    color: MyColors.textColor,
+  );
+
+  static const TextStyle eventDescriptionStyle = TextStyle(
+    fontFamily: robotoFont,
+    fontSize: 15,
+    color: MyColors.textColor,
+  );
 }
