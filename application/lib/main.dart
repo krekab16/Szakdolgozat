@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
                   date: DateTime.now(),
                   image: '',
                   stuffLimit: 0,
-                  description: ''))),
+                  description: '', id: ''))),
         },
       ),
     );

@@ -4,10 +4,11 @@ class EventDTO {
   String name;
   String city;
   String category;
-  Timestamp  date;
+  Timestamp date;
   String image;
   int stuffLimit;
   String description;
+  String id;
 
   EventDTO({
     required this.name,
@@ -17,6 +18,7 @@ class EventDTO {
     required this.image,
     required this.stuffLimit,
     required this.description,
+    required this.id,
   });
 
   Map<String, dynamic> toJson() {
@@ -31,7 +33,8 @@ class EventDTO {
     };
   }
 
-  factory EventDTO.fromJson(Map<String, dynamic> json , String imageDownloadUrl) {
+  factory EventDTO.fromJson(
+      Map<String, dynamic> json, String imageDownloadUrl, String id) {
     return EventDTO(
       name: json['name'],
       city: json['city'],
@@ -40,6 +43,7 @@ class EventDTO {
       image: imageDownloadUrl,
       stuffLimit: json['stuffLimit'],
       description: json['description'],
+      id: id,
     );
   }
 }

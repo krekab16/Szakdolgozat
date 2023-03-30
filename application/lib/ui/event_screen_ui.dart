@@ -1,6 +1,7 @@
 import 'package:application/utils/my_button.dart';
 import 'package:application/viewmodel/event_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../model/event_model.dart';
@@ -21,7 +22,7 @@ class _EventScreenState extends State<EventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final eventViewModel = Provider.of<EventViewModel>(context);
+    final eventViewModel = Provider.of<EventViewModel>(context, listen: true);
     return Scaffold(
       body: ListView(
         children: [
@@ -126,6 +127,63 @@ class _EventScreenState extends State<EventScreen> {
                         onTap: () {
                           setState(() {
                             _isFavorite = !_isFavorite;
+                            if (_isFavorite) {
+                              eventViewModel
+                                  .addFavouriteEvent(widget.eventModel.toDTO());
+                              if (eventViewModel.errorMessages.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: successfulAddToFavoritesMessage);
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                          title: Text(
+                                            errorDialogTitle,
+                                            style: Styles.errorText,
+                                          ),
+                                          content: Text(
+                                            eventViewModel.errorMessages
+                                                .join(" "),
+                                            style: Styles.errorText,
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                              child: Text(close),
+                                            )
+                                          ],
+                                        ));
+                              }
+                            } else {
+                              eventViewModel.removeFavouriteEvent(
+                                  widget.eventModel.toDTO());
+                              if (eventViewModel.errorMessages.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: successfulRemoveFromFavoritesMessage);
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                          title: Text(
+                                            errorDialogTitle,
+                                            style: Styles.errorText,
+                                          ),
+                                          content: Text(
+                                            eventViewModel.errorMessages
+                                                .join(" "),
+                                            style: Styles.errorText,
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                              child: Text(close),
+                                            )
+                                          ],
+                                        ));
+                              }
+                            }
                           });
                         },
                         child: Icon(
@@ -139,7 +197,70 @@ class _EventScreenState extends State<EventScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10),
-                  child: MyButton(participation, () {},
+                  child: MyButton(
+                    participation,
+                    () async {
+                      await eventViewModel
+                          .addParticipation(widget.eventModel.toDTO());
+                      if (eventViewModel.errorMessages.isEmpty) {
+                        Fluttertoast.showToast(
+                            msg: successfulParticipationMessage);
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: Text(
+                              errorDialogTitle,
+                              style: Styles.errorText,
+                            ),
+                            content: Text(
+                              eventViewModel.errorMessages.join(" "),
+                              style: Styles.errorText,
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(close),
+                              )
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: MyButton(
+                    removeParticipation,
+                    () async {
+                      await eventViewModel
+                          .removeParticipation(widget.eventModel.toDTO());
+                      if (eventViewModel.errorMessages.isEmpty) {
+                        Fluttertoast.showToast(
+                            msg: successfulRemoveFromParticipationMessage);
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: Text(
+                              errorDialogTitle,
+                              style: Styles.errorText,
+                            ),
+                            content: Text(
+                              eventViewModel.errorMessages.join(" "),
+                              style: Styles.errorText,
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text(close),
+                              )
+                            ],
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ),
                 Padding(

@@ -9,6 +9,7 @@ class EventModel {
   String image;
   int stuffLimit;
   String description;
+  String id;
 
   EventModel({
     required this.name,
@@ -18,6 +19,7 @@ class EventModel {
     required this.image,
     required this.stuffLimit,
     required this.description,
+    required this.id,
   });
 
   EventDTO toDTO() {
@@ -29,6 +31,7 @@ class EventModel {
       image: image,
       stuffLimit: stuffLimit,
       description: description,
+      id: id,
     );
   }
 
@@ -41,6 +44,7 @@ class EventModel {
       image: eventDTO.image,
       stuffLimit: eventDTO.stuffLimit,
       description: eventDTO.description,
+      id: eventDTO.id,
     );
   }
 }
