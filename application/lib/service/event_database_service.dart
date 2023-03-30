@@ -8,9 +8,9 @@ class EventDatabaseService {
   Future<List<EventDTO>> getEvents() async {
     try {
       final QuerySnapshot querySnapshot =
-          await _firestore.collection('events').orderBy('date').get();
+      await _firestore.collection('events').orderBy('date').get();
       final List<EventDTO> events =
-          await Future.wait(querySnapshot.docs.map((doc) async {
+      await Future.wait(querySnapshot.docs.map((doc) async {
         final data = doc.data() as Map<String, dynamic>;
         return EventDTO.fromJson(data, doc.id);
       }).toList());
@@ -34,7 +34,7 @@ class EventDatabaseService {
   Future<void> addParticipation(String userId, EventDTO eventDTO) async {
     try {
       final DocumentSnapshot docSnapshot =
-          await _firestore.collection('events').doc(eventDTO.id).get();
+      await _firestore.collection('events').doc(eventDTO.id).get();
       final int participationCount = docSnapshot.get('participationCount');
       final int stuffLimit = eventDTO.stuffLimit;
 
@@ -54,7 +54,7 @@ class EventDatabaseService {
   Future<void> removeParticipation(String userId, EventDTO eventDTO) async {
     try {
       final DocumentSnapshot docSnapshot =
-          await _firestore.collection('events').doc(eventDTO.id).get();
+      await _firestore.collection('events').doc(eventDTO.id).get();
 
       if (userId.isNotEmpty &&
           docSnapshot.get('participants').contains(userId)) {

@@ -35,3 +35,4 @@ String removeParticipation = "Részvétel eltávolítása";
 String participationErrorMessage = "A részvétel meghaladja a szabad helyek számát!";
 String currentUserNotParticipatingErrorMessage = "Ön még nem vesz részt ezen az eseményen!";
 String loading = "Betöltés...";
+

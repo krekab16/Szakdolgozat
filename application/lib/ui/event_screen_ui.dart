@@ -181,23 +181,23 @@ class _EventScreenState extends State<EventScreen> {
                                       showDialog(
                                           context: context,
                                           builder: (_) => AlertDialog(
-                                                title: Text(
-                                                  errorDialogTitle,
-                                                  style: Styles.errorText,
-                                                ),
-                                                content: Text(
-                                                  eventViewModel.errorMessages
-                                                      .join(" "),
-                                                  style: Styles.errorText,
-                                                ),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(context),
-                                                    child: Text(close),
-                                                  )
-                                                ],
-                                              ));
+                                            title: Text(
+                                              errorDialogTitle,
+                                              style: Styles.errorText,
+                                            ),
+                                            content: Text(
+                                              eventViewModel.errorMessages
+                                                  .join(" "),
+                                              style: Styles.errorText,
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                                child: Text(close),
+                                              )
+                                            ],
+                                          ));
                                     }
                                   } else {
                                     eventViewModel.removeFavouriteEvent(
@@ -205,28 +205,28 @@ class _EventScreenState extends State<EventScreen> {
                                     if (eventViewModel.errorMessages.isEmpty) {
                                       Fluttertoast.showToast(
                                           msg:
-                                              successfulRemoveFromFavoritesMessage);
+                                          successfulRemoveFromFavoritesMessage);
                                     } else {
                                       showDialog(
                                           context: context,
                                           builder: (_) => AlertDialog(
-                                                title: Text(
-                                                  errorDialogTitle,
-                                                  style: Styles.errorText,
-                                                ),
-                                                content: Text(
-                                                  eventViewModel.errorMessages
-                                                      .join(" "),
-                                                  style: Styles.errorText,
-                                                ),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(context),
-                                                    child: Text(close),
-                                                  )
-                                                ],
-                                              ));
+                                            title: Text(
+                                              errorDialogTitle,
+                                              style: Styles.errorText,
+                                            ),
+                                            content: Text(
+                                              eventViewModel.errorMessages
+                                                  .join(" "),
+                                              style: Styles.errorText,
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                                child: Text(close),
+                                              )
+                                            ],
+                                          ));
                                     }
                                   }
                                 });
@@ -244,7 +244,7 @@ class _EventScreenState extends State<EventScreen> {
                         padding: const EdgeInsets.all(10),
                         child: MyButton(
                           participation,
-                          () async {
+                              () async {
                             await eventViewModel.addParticipation(
                                 userModel.id, widget.eventModel);
                             if (eventViewModel.errorMessages.isEmpty) {
@@ -278,13 +278,13 @@ class _EventScreenState extends State<EventScreen> {
                         padding: const EdgeInsets.all(10),
                         child: MyButton(
                           removeParticipation,
-                          () async {
+                              () async {
                             await eventViewModel.removeParticipation(
                                 userModel.id, widget.eventModel);
                             if (eventViewModel.errorMessages.isEmpty) {
                               Fluttertoast.showToast(
                                   msg:
-                                      successfulRemoveFromParticipationMessage);
+                                  successfulRemoveFromParticipationMessage);
                             } else {
                               showDialog(
                                 context: context,

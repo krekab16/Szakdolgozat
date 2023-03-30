@@ -3,6 +3,7 @@ import 'package:application/ui/log_in_screen_ui.dart';
 import 'package:application/ui/sign_up_screen_ui.dart';
 import 'package:application/ui/start_screen_ui.dart';
 import 'package:application/utils/route_constants.dart';
+import 'package:application/utils/text_strings.dart';
 import 'package:application/viewmodel/event_view_model.dart';
 import 'package:application/viewmodel/home_view_model.dart';
 import 'package:application/viewmodel/log_in_screen_view_model.dart';
@@ -15,7 +16,7 @@ import 'model/user_model.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -36,7 +37,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => UserModel.createEmpty()),
       ],
       child: MaterialApp(
-        title: 'eventify',
+        title: appName,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
