@@ -21,8 +21,7 @@ class EventViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> getEventWithFavoriteStatus(
-      UserModel userModel, String eventId) async {
+  Future<bool> getEventWithFavoriteStatus(UserModel userModel, String eventId) async {
     return userModel.favorites?.contains(eventId) ?? false;
   }
 
