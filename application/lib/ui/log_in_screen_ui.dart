@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:application/utils/input_box.dart';
 import 'package:provider/provider.dart';
+import '../model/user_model.dart';
 import '../utils/colors.dart';
 import '../utils/my_button.dart';
 import '../utils/styles.dart';
@@ -20,6 +21,7 @@ class _LogInScreen extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     final logInViewModel = Provider.of<LogInViewModel>(context);
+    final userModel = Provider.of<UserModel>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -46,45 +48,45 @@ class _LogInScreen extends State<LogInScreen> {
                         Icons.mail,
                       ),
                       email,
-                          (email) => logInViewModel.setEmail(email),
-                          (value) => logInViewModel.validateEmail(value!),
+                      (email) => {userModel.email = email},
+                      (value) => logInViewModel.validateEmail(value!),
                     ),
                     InputBox(
                       const Icon(
                         Icons.vpn_key,
                       ),
                       password,
-                          (password) => logInViewModel.setPassword(password),
-                          (value) => logInViewModel.validatePassword(value!),
+                      (password) => {userModel.password = password},
+                      (value) => logInViewModel.validatePassword(value!),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(5),
                       child: MyButton(logIn, () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
-                          await logInViewModel.login();
+                          userModel.id = await logInViewModel.login(userModel);
                           if (logInViewModel.errorMessages.isEmpty) {
                             logInViewModel.navigateToHome(context);
                           } else {
                             showDialog(
                                 context: context,
                                 builder: (_) => AlertDialog(
-                                  title: Text(
-                                    errorDialogTitle,
-                                    style: Styles.errorText,
-                                  ),
-                                  content: Text(
-                                    logInViewModel.errorMessages.join(" "),
-                                    style: Styles.errorText,
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(context),
-                                      child: Text(close),
-                                    )
-                                  ],
-                                ));
+                                      title: Text(
+                                        errorDialogTitle,
+                                        style: Styles.errorText,
+                                      ),
+                                      content: Text(
+                                        logInViewModel.errorMessages.join(" "),
+                                        style: Styles.errorText,
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: Text(close),
+                                        )
+                                      ],
+                                    ));
                           }
                         }
                       }),

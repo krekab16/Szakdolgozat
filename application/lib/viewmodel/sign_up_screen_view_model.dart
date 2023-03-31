@@ -6,66 +6,18 @@ import '../utils/route_constants.dart';
 import '../utils/text_strings.dart';
 
 class SignUpViewModel with ChangeNotifier {
-
-  final UserModel _user = UserModel(
-      name: '',
-      username: '',
-      email: '',
-      password: '',
-      isOrganizer: false);
-
   final UserDatabaseService service = UserDatabaseService();
 
   List<String> errorMessages = [];
-
-  String getName() {
-    return _user.name;
-  }
-
-  String getEmail() {
-    return _user.email;
-  }
-
-  String getPassword() {
-    return _user.password;
-  }
-
-  bool getIsOrganizer() {
-    return _user.isOrganizer;
-  }
-
-  void setName(String name) {
-    _user.name = name;
-    notifyListeners();
-  }
-
-  void setUserName(String userName) {
-    _user.username = userName;
-    notifyListeners();
-  }
-
-  void setEmail(String email) {
-    _user.email = email;
-    notifyListeners();
-  }
-
-  void setPassword(String password) {
-    _user.password = password;
-    notifyListeners();
-  }
-
-  void setOrganizer(bool organizer) {
-    _user.isOrganizer = organizer;
-    notifyListeners();
-  }
 
   void navigateToHomeScreen(BuildContext context) {
     Navigator.pushNamed(context, homeRoute);
   }
 
-  Future<void> register() async {
+  Future<String> register(UserModel userModel) async {
+    UserModel newUser = UserModel.createEmpty();
     try {
-      await service.addUserToDatabase(_user.toDTO());
+     newUser = UserModel.fromDTO(await service.addUserToDatabase(userModel.toDTO()));
       errorMessages = [];
     } catch (e) {
       if (e.toString().isNotEmpty) {
@@ -75,6 +27,7 @@ class SignUpViewModel with ChangeNotifier {
       }
     }
     notifyListeners();
+    return newUser.id;
   }
 
   String? validateName(String value) {

@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import '../model/event_dto.dart';
 import '../utils/text_strings.dart';
 
 class EventDatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<List<EventDTO>> getEvents() async {
     try {
@@ -23,86 +21,53 @@ class EventDatabaseService {
     }
   }
 
-  Future<void> addEventToFavorites(EventDTO eventDTO) async {
+  Future<void> updateEvent(EventDTO eventDTO) async {
     try {
-      final User? currentUser = _firebaseAuth.currentUser;
-      final DocumentReference docRef =
-          _firestore.collection('users').doc(currentUser?.uid);
-      await docRef.update({
-        'favorites': FieldValue.arrayUnion([eventDTO.id])
-      });
+      await _firestore
+          .collection('events')
+          .doc(eventDTO.id)
+          .update(eventDTO.toJson());
     } on FirebaseException catch (e) {
       throw Exception(e.message);
-    } catch (e) {
-      throw Exception(e.toString());
     }
   }
 
-  Future<void> removeEventFromFavorites(EventDTO eventDTO) async {
+  Future<void> addParticipation(String userId, EventDTO eventDTO) async {
     try {
-      final User? currentUser = _firebaseAuth.currentUser;
-      final DocumentReference docRef =
-          _firestore.collection('users').doc(currentUser?.uid);
-      await docRef.update({
-        'favorites': FieldValue.arrayRemove([eventDTO.id])
-      });
-    } on FirebaseException catch (e) {
-      throw Exception(e.message);
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
-  Future<void> addParticipation(EventDTO eventDTO) async {
-    try {
-      final User? currentUser = _firebaseAuth.currentUser;
-
       final DocumentSnapshot docSnapshot =
           await _firestore.collection('events').doc(eventDTO.id).get();
       final int participationCount = docSnapshot.get('participationCount');
       final int stuffLimit = eventDTO.stuffLimit;
 
       if (participationCount < stuffLimit) {
-        await _firestore.collection('users').doc(currentUser?.uid).update({
-          'participate': FieldValue.arrayUnion([eventDTO.id]),
-        });
         await _firestore.collection('events').doc(eventDTO.id).update({
           'participationCount': FieldValue.increment(1),
-          'participants': FieldValue.arrayUnion([currentUser?.uid]),
+          'participants': FieldValue.arrayUnion([userId]),
         });
       } else {
         throw Exception(participationErrorMessage);
       }
     } on FirebaseException catch (e) {
       throw Exception(e.message);
-    } catch (e) {
-      throw Exception(e.toString());
     }
   }
 
-  Future<void> removeParticipation(EventDTO eventDTO) async {
+  Future<void> removeParticipation(String userId, EventDTO eventDTO) async {
     try {
-      final User? currentUser = _firebaseAuth.currentUser;
-
       final DocumentSnapshot docSnapshot =
           await _firestore.collection('events').doc(eventDTO.id).get();
 
-      if (currentUser != null &&
-          docSnapshot.get('participants').contains(currentUser.uid)) {
-        await _firestore.collection('users').doc(currentUser.uid).update({
-          'participate': FieldValue.arrayRemove([eventDTO.id]),
-        });
+      if (userId.isNotEmpty &&
+          docSnapshot.get('participants').contains(userId)) {
         await _firestore.collection('events').doc(eventDTO.id).update({
           'participationCount': FieldValue.increment(-1),
-          'participants': FieldValue.arrayRemove([currentUser.uid])
+          'participants': FieldValue.arrayRemove([userId])
         });
       } else {
-        throw Exception('The current user is not participating in the event');
+        throw Exception(currentUserNotParticipatingErrorMessage);
       }
     } on FirebaseException catch (e) {
       throw Exception(e.message);
-    } catch (e) {
-      throw Exception(e.toString());
     }
   }
 }
