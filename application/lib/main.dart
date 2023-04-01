@@ -14,10 +14,10 @@ import 'package:provider/provider.dart';
 import 'model/event_model.dart';
 import 'model/user_model.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -52,14 +52,7 @@ class _MyAppState extends State<MyApp> {
               create: (context) => HomeViewModel(), child: const HomeScreen()),
           eventRoute: (context) => ChangeNotifierProvider(
               create: (context) => EventViewModel(),
-              child: EventScreen(EventModel(
-                  name: '',
-                  city: '',
-                  category: '',
-                  date: DateTime.now(),
-                  image: '',
-                  stuffLimit: 0,
-                  description: '', id: ''))),
+              child: EventScreen(EventModel.createEmpty())),
         },
       ),
     );

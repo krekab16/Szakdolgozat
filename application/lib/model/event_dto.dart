@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class EventDTO {
   String name;
   String city;
+  String street;
+  int houseNumber;
   String category;
   Timestamp date;
   String image;
@@ -13,6 +15,8 @@ class EventDTO {
   EventDTO({
     required this.name,
     required this.city,
+    required this.street,
+    required this.houseNumber,
     required this.category,
     required this.date,
     required this.image,
@@ -38,6 +42,8 @@ class EventDTO {
     return EventDTO(
       name: json['name'],
       city: json['city'],
+      street: json['street'],
+      houseNumber: json['houseNumber'],
       category: json['category'],
       date: json['date'],
       image: imageDownloadUrl,

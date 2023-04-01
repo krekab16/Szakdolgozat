@@ -33,6 +33,5 @@ String successfulParticipationMessage = "Sikeres részvétel!";
 String successfulRemoveFromParticipationMessage = "Sikeres visszavonás!";
 String removeParticipation = "Részvétel eltávolítása";
 String participationErrorMessage = "A részvétel meghaladja a szabad helyek számát!";
-String alreadyAddedToFavoritesMessage = "SIKEEER";
 String currentUserNotParticipatingErrorMessage = "Ön még nem vesz részt ezen az eseményen!";
 String loading = "Loading...";
