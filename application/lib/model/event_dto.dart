@@ -38,7 +38,7 @@ class EventDTO {
   }
 
   factory EventDTO.fromJson(
-      Map<String, dynamic> json, String imageDownloadUrl, String id) {
+      Map<String, dynamic> json, String id) {
     return EventDTO(
       name: json['name'],
       city: json['city'],
@@ -46,7 +46,7 @@ class EventDTO {
       houseNumber: json['houseNumber'],
       category: json['category'],
       date: json['date'],
-      image: imageDownloadUrl,
+      image: json['image'],
       stuffLimit: json['stuffLimit'],
       description: json['description'],
       id: id,

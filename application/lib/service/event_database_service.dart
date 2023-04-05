@@ -12,8 +12,7 @@ class EventDatabaseService {
       final List<EventDTO> events =
           await Future.wait(querySnapshot.docs.map((doc) async {
         final data = doc.data() as Map<String, dynamic>;
-        final String imageDownloadUrl = data['image'];
-        return EventDTO.fromJson(data, imageDownloadUrl, doc.id);
+        return EventDTO.fromJson(data, doc.id);
       }).toList());
       return events;
     } on FirebaseException catch (e) {
