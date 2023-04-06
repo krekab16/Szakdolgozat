@@ -81,4 +81,23 @@ class Styles {
     fontSize: 15,
     color: MyColors.textColor,
   );
+
+  static const TextStyle menuTextStyles = TextStyle(
+    fontFamily: robotoFont,
+    fontSize: 40,
+    fontWeight: FontWeight.bold,
+    color: MyColors.darkBlueColor,
+  );
+
+  static const TextStyle drawerText = TextStyle(
+    fontFamily: robotoFont,
+    fontSize: 20,
+    color: MyColors.darkBlueColor,
+  );
+
+  static const TextStyle dateTimeText = TextStyle(
+    fontFamily: robotoFont,
+    fontSize: 20,
+    color: MyColors.darkBlueColor,
+  );
 }
