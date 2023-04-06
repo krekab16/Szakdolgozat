@@ -10,6 +10,7 @@ import 'package:application/ui/start_screen_ui.dart';
 import 'package:application/utils/route_constants.dart';
 import 'package:application/utils/text_strings.dart';
 import 'package:application/viewmodel/event_view_model.dart';
+import 'package:application/viewmodel/favourite_event_screen_view_model.dart';
 import 'package:application/viewmodel/home_view_model.dart';
 import 'package:application/viewmodel/log_in_screen_view_model.dart';
 import 'package:application/viewmodel/menu_view_model.dart';
@@ -42,6 +43,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => EventViewModel()),
         ChangeNotifierProvider(create: (_) => UserModel.createEmpty()),
         ChangeNotifierProvider(create: (_) => MenuViewModel()),
+        ChangeNotifierProvider(create: (_) => FavouriteEventViewModel()),
       ],
       child: MaterialApp(
         title: appName,
