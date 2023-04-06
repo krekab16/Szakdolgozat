@@ -46,5 +46,3 @@ String profile = "Profil";
 String logout = "Kijelentkezés";
 String noUserFoundErrorMessage = "Nincs ilyen felhasználó!";
 String save = "Mentés";
-String successfulUpdateMessage = "Sikeres módosítás!";
-
