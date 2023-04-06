@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../service/user_database_service.dart';
+import '../ui/favourite_event_screen_ui.dart';
 import '../utils/route_constants.dart';
 import '../utils/text_strings.dart';
+import 'favourite_event_screen_view_model.dart';
 
 class MenuViewModel with ChangeNotifier {
   final UserDatabaseService service = UserDatabaseService();
@@ -34,8 +37,17 @@ class MenuViewModel with ChangeNotifier {
     Navigator.pushNamed(context, participatedEventRoute);
   }
 
-  void navigateToFavourites(BuildContext context) {
-    Navigator.pushNamed(context, favouriteEventsRoute);
+  void navigateToFavourites(BuildContext context, String userId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+          create: (context) =>
+              FavouriteEventViewModel()..fetchFavouriteEvent(userId),
+          child: const FavouriteEventScreen(),
+        ),
+      ),
+    );
   }
 
   void navigateToNewEvent(BuildContext context) {

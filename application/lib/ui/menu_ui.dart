@@ -61,7 +61,7 @@ class _MenuState extends State<Menu> {
           DrawerList(home, const Icon(Icons.home),
               () => menuViewModel.navigateToHome(context)),
           DrawerList(favourites, const Icon(Icons.favorite),
-              () => menuViewModel.navigateToFavourites(context)),
+              () => menuViewModel.navigateToFavourites(context,userModel.id)),
           DrawerList(profile, const Icon(Icons.account_circle),
               () => menuViewModel.navigateToProfile(context)),
           if (userModel.isOrganizer) ...[
