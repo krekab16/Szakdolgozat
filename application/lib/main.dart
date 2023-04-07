@@ -64,6 +64,7 @@ class _MyAppState extends State<MyApp> {
           favouriteEventsRoute: (context) => const FavouriteEventScreen(),
           newEventRoute: (context) => const NewEventScreen(),
           participatedEventRoute: (context) => const ParticipatedEventScreen(),
+          favouriteEventsRoute: (context) => const FavouriteEventScreen(),
           createdEventRoute: (context) => const CreatedEventScreen(),
         },
       ),
