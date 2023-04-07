@@ -100,6 +100,23 @@ class EventDatabaseService {
     }
   }
 
+  Future<List<EventDTO>> getMyEvents(String userId) async {
+    try {
+      final QuerySnapshot querySnapshot = await _firestore
+          .collection('events')
+          .where('createdBy', isEqualTo: userId)
+          .get();
+      final List<EventDTO> events =
+          await Future.wait(querySnapshot.docs.map((doc) async {
+        final data = doc.data() as Map<String, dynamic>;
+        return EventDTO.fromJson(data, doc.id);
+      }).toList());
+      return events;
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
   Future<List<EventDTO>> getParticipatedEvent(String userId) async {
     try {
       final QuerySnapshot querySnapshot = await _firestore
