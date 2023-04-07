@@ -8,6 +8,9 @@ import '../utils/my_button.dart';
 import '../utils/styles.dart';
 import '../utils/text_strings.dart';
 import '../viewmodel/new_event_view_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import '../model/user_model.dart';
+import 'dart:io';
 
 class NewEventScreen extends StatefulWidget {
   const NewEventScreen({Key? key}) : super(key: key);
@@ -19,6 +22,7 @@ class NewEventScreen extends StatefulWidget {
 class _NewEventScreenState extends State<NewEventScreen> {
   final _formKey = GlobalKey<FormState>();
   final dateController = TextEditingController();
+  File? _imageFile;
   String? selectedCategory;
 
   void _showDateTimePicker() {
@@ -50,6 +54,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
   Widget build(BuildContext context) {
     final newEventScreenViewModel =
         Provider.of<NewEventScreenViewModel>(context);
+    final userModel = Provider.of<UserModel>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -74,16 +79,17 @@ class _NewEventScreenState extends State<NewEventScreen> {
                   Icons.create_rounded,
                 ),
                 newEventName,
-                (newEventName) => {},
-                (value) => (value!),
+                (newEventName) => newEventScreenViewModel.setName(newEventName),
+                (value) => newEventScreenViewModel.validateName(value!),
               ),
               InputBox(
                 const Icon(
                   Icons.create_rounded,
                 ),
                 newEventAddress,
-                (newEventAddress) => {},
-                (value) => (value!),
+                (newEventAddress) =>
+                    newEventScreenViewModel.setAddress(newEventAddress),
+                (value) => newEventScreenViewModel.validateAddress(value!),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -102,8 +108,10 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       Icons.category_outlined,
                     ),
                   ),
-                  onChanged: (selectedCategory) => {},
-                  validator: (category) => (category!),
+                  onChanged: (selectedCategory) =>
+                      newEventScreenViewModel.setCategory(selectedCategory!),
+                  validator: (category) =>
+                      newEventScreenViewModel.validateCategory(category),
                 ),
               ),
               Padding(
@@ -120,7 +128,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
                           Icons.date_range_rounded,
                         ),
                       ),
-                      validator: (value) => (value!),
+                      validator: (value) =>
+                          newEventScreenViewModel.validateDate(value!),
                     ),
                   ),
                 ),
@@ -130,8 +139,10 @@ class _NewEventScreenState extends State<NewEventScreen> {
                     Icons.create_rounded,
                   ),
                   newEventStuffLimit,
-                  (newEventStuffLimit) => {},
-                  (value) => (value!)),
+                  (newEventStuffLimit) => newEventScreenViewModel
+                      .setStuffLimit(int.parse(newEventStuffLimit)),
+                  (value) =>
+                      newEventScreenViewModel.validateStuffLimit(value!)),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -143,24 +154,60 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       Icons.create_rounded,
                     ),
                   ),
-                  onChanged: (newEventDescription) => {},
-                  validator: (value) => (value!),
+                  onChanged: (newEventDescription) => newEventScreenViewModel
+                      .setDescription(newEventDescription),
+                  validator: (value) =>
+                      newEventScreenViewModel.validateDescription(value!),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: FormBuilderImagePicker(
-                  name: photos,
+                  name: 'photos',
                   decoration: InputDecoration(labelText: choosePicture),
                   maxImages: 1,
                   onChanged: (images) {
-                    setState(() {});
+                    setState(() {
+                      _imageFile = File(images![0].path);
+                    });
+                    newEventScreenViewModel.setImage(images![0].path);
                   },
                 ),
               ),
               Padding(
                   padding: const EdgeInsets.all(10),
-                  child: MyButton(create, () {})),
+                  child: MyButton(create, () async {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState?.save();
+                      await newEventScreenViewModel.addNewEvent(
+                          userModel.id, _imageFile!);
+                      if (newEventScreenViewModel.errorMessages.isEmpty) {
+                        Fluttertoast.showToast(msg: successfulAddMessage);
+                        _formKey.currentState?.reset();
+                        dateController.clear();
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                                  title: Text(
+                                    errorDialogTitle,
+                                    style: Styles.errorText,
+                                  ),
+                                  content: Text(
+                                    newEventScreenViewModel.errorMessages
+                                        .join(" "),
+                                    style: Styles.errorText,
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: Text(close),
+                                    )
+                                  ],
+                                ));
+                      }
+                    }
+                  })),
             ],
           ),
         ),

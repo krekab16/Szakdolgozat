@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import '../model/event_dto.dart';
 import '../utils/text_strings.dart';
+import 'dart:io';
 
 class EventDatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   Future<List<EventDTO>> getEvents() async {
     try {
@@ -115,6 +118,26 @@ class EventDatabaseService {
       throw Exception(e.message);
     } catch (e) {
       throw Exception(e.toString());
+    }
+  }
+
+  Future<void> addEventToDatabase(
+      String userId, EventDTO eventDTO, File imageFile) async {
+    try {
+      final String imageName = '${eventDTO.name}_${DateTime.now()}.jpg';
+      final Reference storageReference = _storage.ref(imageName);
+      final UploadTask uploadTask = storageReference.putFile(imageFile);
+      final TaskSnapshot snapshot = await uploadTask;
+      final String downloadUrl = await snapshot.ref.getDownloadURL();
+      eventDTO.image = downloadUrl;
+      final eventData = eventDTO.toJson();
+      eventData.addAll({
+        'createdBy': userId,
+        'participationCount': 0,
+      });
+      await _firestore.collection('events').add(eventData);
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
     }
   }
 }
