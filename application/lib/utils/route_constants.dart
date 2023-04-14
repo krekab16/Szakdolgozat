@@ -9,3 +9,4 @@ const String myEventsRoute = '/my_events';
 const String createdEventRoute = '/created_event';
 const String favouriteEventsRoute = '/favourites';
 const String participatedEventRoute = '/participate';
+const String mapRoute = '/map';

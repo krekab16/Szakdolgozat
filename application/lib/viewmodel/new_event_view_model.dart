@@ -64,9 +64,7 @@ class NewEventScreenViewModel with ChangeNotifier {
       await service.addEventToDatabase(userId, _event.toDTO(), imageFile);
       errorMessages = [];
     } catch (e) {
-      if (e
-          .toString()
-          .isNotEmpty) {
+      if (e.toString().isNotEmpty) {
         errorMessages = [e.toString()];
       } else {
         errorMessages = [standardErrorMessage];

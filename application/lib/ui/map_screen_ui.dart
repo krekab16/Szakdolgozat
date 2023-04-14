@@ -31,6 +31,7 @@ class _MapScreenState extends State<MapScreen> {
         initialCameraPosition: mapViewModel.initialCameraPosition,
         myLocationEnabled: true,
         myLocationButtonEnabled: true,
+        markers: mapViewModel.currentMarker,
       ),
     );
   }
