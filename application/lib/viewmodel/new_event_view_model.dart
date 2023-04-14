@@ -1,6 +1,5 @@
 import 'package:application/model/event_model.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class NewEventScreenViewModel with ChangeNotifier {
   final EventModel _event = EventModel.createEmpty();
@@ -17,59 +16,14 @@ class NewEventScreenViewModel with ChangeNotifier {
     'Kultúra'
   ];
 
-  String getName() {
-    return _event.name;
-  }
-
-  String getCity() {
-    return _event.city;
-  }
-
-  String? getStreet() {
-    return _event.street;
-  }
-
-  int? getHouseNumber() {
-    return _event.houseNumber;
-  }
-
-  String getCategory() {
-    return _event.category;
-  }
-
-  DateTime getDate() {
-    return _event.date;
-  }
-
-  String getImage() {
-    return _event.image;
-  }
-
-  int getStuffLimit() {
-    return _event.stuffLimit;
-  }
-
-  String getDescription() {
-    return _event.description;
-  }
 
   void setName(String name) {
     _event.name = name;
     notifyListeners();
   }
 
-  void setCity(String city) {
-    _event.city = city;
-    notifyListeners();
-  }
-
-  void setStreet(String street) {
-    _event.street = street;
-    notifyListeners();
-  }
-
-  void setHouseNumber(int houseNumber) {
-    _event.houseNumber = houseNumber;
+  void setAdress(String address) {
+    _event.address = address;
     notifyListeners();
   }
 

@@ -81,31 +81,9 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 const Icon(
                   Icons.create_rounded,
                 ),
-                newEventCity,
-                (newEventCity) => {},
+                newEventAddress,
+                (newEventAddress) => {},
                 (value) => (value!),
-              ),
-              InputBox(
-                const Icon(
-                  Icons.create_rounded,
-                ),
-                newEventStreet,
-                (newEventStreet) => {},
-                (value) => (value!),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  maxLines: 1,
-                  decoration: InputDecoration(
-                    labelText: newEventHouseNumber,
-                    border: const OutlineInputBorder(),
-                    prefixIcon: const Icon(
-                      Icons.create_rounded,
-                    ),
-                  ),
-                  onChanged: (newEventHouseNumber) => {},
-                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
