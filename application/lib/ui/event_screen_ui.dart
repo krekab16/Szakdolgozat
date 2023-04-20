@@ -125,30 +125,41 @@ class _EventScreenState extends State<EventScreen> {
                   padding: const EdgeInsets.all(30),
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Column(
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const Icon(
                                 Icons.location_on_outlined,
-                                size: 15,
+                                size: 25,
                               ),
-                              Text(
-                                widget.eventModel.city,
-                                style: Styles.eventCityStyle,
+                              Expanded(
+                                child: Text(
+                                  widget.eventModel.address,
+                                  style: Styles.eventAddressStyle,
+                                ),
                               )
                             ],
                           ),
-                          Text(
-                            DateFormat('yyyy-MM-dd')
-                                .format(widget.eventModel.date),
-                            style: Styles.eventDateStyle,
-                          ),
-                          Text(
-                            DateFormat('HH:mm').format(widget.eventModel.date),
-                            style: Styles.eventDateStyle,
-                          )
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(widget.eventModel.date),
+                                      style: Styles.eventDateStyle,
+                                    ),
+                                    Text(
+                                      DateFormat('HH:mm')
+                                          .format(widget.eventModel.date),
+                                      style: Styles.eventDateStyle,
+                                    ),
+                                  ],
+                                ),
+                              ]),
                         ],
                       ),
                       Padding(

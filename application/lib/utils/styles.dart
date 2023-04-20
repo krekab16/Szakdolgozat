@@ -64,7 +64,7 @@ class Styles {
     color: Colors.white,
   );
 
-  static const TextStyle eventCityStyle = TextStyle(
+  static const TextStyle eventAddressStyle = TextStyle(
     fontFamily: robotoFont,
     fontSize: 20,
     color: MyColors.textColor,
@@ -78,7 +78,7 @@ class Styles {
 
   static const TextStyle eventDescriptionStyle = TextStyle(
     fontFamily: robotoFont,
-    fontSize: 15,
+    fontSize: 18,
     color: MyColors.textColor,
   );
 }

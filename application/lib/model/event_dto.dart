@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventDTO {
   String name;
-  String city;
-  String street;
-  int houseNumber;
+  String address;
   String category;
   Timestamp date;
   String image;
@@ -14,9 +12,7 @@ class EventDTO {
 
   EventDTO({
     required this.name,
-    required this.city,
-    required this.street,
-    required this.houseNumber,
+    required this.address,
     required this.category,
     required this.date,
     required this.image,
@@ -28,7 +24,7 @@ class EventDTO {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'city': city,
+      'address': address,
       'category': category,
       'date': date,
       'image': image,
@@ -37,13 +33,10 @@ class EventDTO {
     };
   }
 
-  factory EventDTO.fromJson(
-      Map<String, dynamic> json, String id) {
+  factory EventDTO.fromJson(Map<String, dynamic> json, String id) {
     return EventDTO(
       name: json['name'],
-      city: json['city'],
-      street: json['street'],
-      houseNumber: json['houseNumber'],
+      address: json['address'],
       category: json['category'],
       date: json['date'],
       image: json['image'],

@@ -1,4 +1,3 @@
-import 'package:application/ui/event_screen_ui.dart';
 import 'package:application/ui/home_screen.dart';
 import 'package:application/ui/log_in_screen_ui.dart';
 import 'package:application/ui/sign_up_screen_ui.dart';
@@ -11,7 +10,6 @@ import 'package:application/viewmodel/sign_up_screen_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'model/event_model.dart';
 import 'model/user_model.dart';
 
 void main() async {
@@ -36,7 +34,6 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => LogInViewModel()),
         ChangeNotifierProvider(create: (_) => EventViewModel()),
         ChangeNotifierProvider(create: (_) => UserModel.createEmpty()),
-
       ],
       child: MaterialApp(
         title: 'eventify',
@@ -50,9 +47,6 @@ class _MyAppState extends State<MyApp> {
           logInRoute: (context) => const LogInScreen(),
           homeRoute: (context) => ChangeNotifierProvider(
               create: (context) => HomeViewModel(), child: const HomeScreen()),
-          eventRoute: (context) => ChangeNotifierProvider(
-              create: (context) => EventViewModel(),
-              child: EventScreen(EventModel.createEmpty())),
         },
       ),
     );

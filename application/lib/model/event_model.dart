@@ -3,9 +3,7 @@ import 'event_dto.dart';
 
 class EventModel {
   String name;
-  String city;
-  String street;
-  int houseNumber;
+  String address;
   String category;
   DateTime date;
   String image;
@@ -13,11 +11,10 @@ class EventModel {
   String description;
   String id;
 
+
   EventModel({
     required this.name,
-    required this.city,
-    required this.street,
-    required this.houseNumber,
+    required this.address,
     required this.category,
     required this.date,
     required this.image,
@@ -28,24 +25,22 @@ class EventModel {
 
   factory EventModel.createEmpty() {
     return EventModel(
-        name: '',
-        city: '',
-        street: '',
-        houseNumber: 0,
-        category: '',
-        date: DateTime.now(),
-        image: '',
-        stuffLimit: 0,
-        description: '',
-        id: '');
+      name: '',
+      address: '',
+      category: '',
+      date: DateTime.now(),
+      image: '',
+      stuffLimit: 0,
+      description: '',
+      id: '',
+
+    );
   }
 
   EventDTO toDTO() {
     return EventDTO(
       name: name,
-      city: city,
-      street: street,
-      houseNumber: houseNumber,
+      address: address,
       category: category,
       date: Timestamp.fromDate(date),
       image: image,
@@ -58,9 +53,7 @@ class EventModel {
   factory EventModel.fromDTO(EventDTO eventDTO) {
     return EventModel(
       name: eventDTO.name,
-      city: eventDTO.city,
-      street: eventDTO.street,
-      houseNumber: eventDTO.houseNumber,
+      address: eventDTO.address,
       category: eventDTO.category,
       date: eventDTO.date.toDate(),
       image: eventDTO.image,
