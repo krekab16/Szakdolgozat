@@ -23,6 +23,22 @@ class EventDatabaseService {
     }
   }
 
+  //ezt megcsinálni úgy , hogy egy bizonyos időintervallum szerint kérje le az eseményeket
+  Future<List<EventDTO>> getEventsForToday() async{
+    try {
+      final QuerySnapshot querySnapshot =
+          await _firestore.collection('events').where('date', isEqualTo: DateTime.now()).get();
+      final List<EventDTO> events =
+          await Future.wait(querySnapshot.docs.map((doc) async {
+        final data = doc.data() as Map<String, dynamic>;
+        return EventDTO.fromJson(data, doc.id);
+      }).toList());
+      return events;
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
   Future<void> updateEvent(EventDTO eventDTO) async {
     try {
       await _firestore

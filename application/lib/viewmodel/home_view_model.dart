@@ -42,7 +42,7 @@ class HomeViewModel with ChangeNotifier {
       MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
           create: (context) =>
-          MapViewModel()..getCurrentLocation()..getEventsAndShowOnMap(),
+          MapViewModel()..requestLocationPermission(context)..fetchMarkersFromEventData(context),
           child: const MapScreen(),
         ),
       ),
