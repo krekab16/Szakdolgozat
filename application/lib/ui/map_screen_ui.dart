@@ -38,7 +38,7 @@ class _MapScreenState extends State<MapScreen> {
               myLocationButtonEnabled: true,
               markers: mapViewModel.getCurrentMarker(),
             ),
-          ]
+          ],
         ],
       ),
     );
