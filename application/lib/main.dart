@@ -52,6 +52,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => CreatedEventViewModel()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: appName,
         theme: ThemeData(
           primarySwatch: Colors.blue,

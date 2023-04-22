@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../model/event_dto.dart';
 import '../model/event_model.dart';
 import '../service/event_database_service.dart';
 import '../ui/event_screen_ui.dart';
+import '../utils/route_constants.dart';
 import '../utils/text_strings.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -20,31 +22,39 @@ class MapViewModel with ChangeNotifier {
   Future<void> requestLocationPermission(BuildContext context) async {
     try {
       LocationPermission permission = await Geolocator.checkPermission();
-      while (permission == LocationPermission.denied ||
+      if (permission == LocationPermission.denied ||
           permission == LocationPermission.deniedForever) {
         permission = await Geolocator.requestPermission();
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Figyelem!'),
-            content: Text(
-                'Ha szeretné a térképen megtekinteni az eseményeket, kérem engedélyezze a helymeghatározást.'),
-            actions: [
-              TextButton(
-                onPressed: () async {
-                  Navigator.pop(context);
-                  await Geolocator.requestPermission();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          ),
-        );
       }
 
       if (permission == LocationPermission.whileInUse ||
           permission == LocationPermission.always) {
-        await getCurrentLocation();
+        getCurrentLocation();
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(permissionRequiredErrorMessage),
+              content: Text(permissionErrorMessage),
+              actions: [
+                TextButton(
+                  child: Text(cancelButton),
+                  onPressed: () {
+                    Navigator.pushNamed(context, homeRoute);
+                  },
+                ),
+                TextButton(
+                  child: Text(grantPermissionButton),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    openAppSettings();
+                  },
+                ),
+              ],
+            );
+          },
+        );
       }
 
       errorMessages = [];
@@ -109,6 +119,7 @@ class MapViewModel with ChangeNotifier {
         );
       }).toSet();
       _markers = (await Future.wait(futureList)).toSet();
+      errorMessages = [];
     } catch (e) {
       if (e.toString().isNotEmpty) {
         errorMessages = [e.toString()];
@@ -128,7 +139,7 @@ class MapViewModel with ChangeNotifier {
         zoom: _initialZoomValue,
       );
 
-  Set<Marker> get currentMarker {
+  Set<Marker> getCurrentMarker() {
     if (_currentMarker != null) {
       _markers = _markers..add(_currentMarker!);
     }
