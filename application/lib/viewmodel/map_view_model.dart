@@ -39,13 +39,13 @@ class MapViewModel with ChangeNotifier {
               content: Text(permissionErrorMessage),
               actions: [
                 TextButton(
-                  child: Text(cancelButton),
+                  child: Text(cancel),
                   onPressed: () {
                     Navigator.pushNamed(context, homeRoute);
                   },
                 ),
                 TextButton(
-                  child: Text(grantPermissionButton),
+                  child: Text(grantPermission),
                   onPressed: () {
                     Navigator.of(context).pop();
                     openAppSettings();
@@ -94,7 +94,7 @@ class MapViewModel with ChangeNotifier {
 
   Future<void> fetchMarkersFromEventData(BuildContext context) async {
     try {
-      final List<EventDTO> eventDTO = await service.getEvents();
+      final List<EventDTO> eventDTO = await service.getEventsForToday();
       final List<EventModel> eventModels =
           eventDTO.map((dto) => EventModel.fromDTO(dto)).toList();
       Iterable<Future<Marker>> futureList =

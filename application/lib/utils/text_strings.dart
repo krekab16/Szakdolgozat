@@ -70,5 +70,5 @@ String map = "Térkép";
 String currentPosition = "Jelenlegi helyzetem";
 String permissionRequiredErrorMessage = "Engedély szükséges!";
 String permissionErrorMessage = "Kérem engedélyezze a térkép használatához a helymeghatározást! Amennyiben nem kívánja használni a térképet, nyomjon a Mégse gombra!";
-String cancelButton = "Mégse";
-String grantPermissionButton = "Engedély megadása";
+String cancel = "Mégse";
+String grantPermission = "Engedély megadása";

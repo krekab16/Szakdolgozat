@@ -25,13 +25,21 @@ class _MapScreenState extends State<MapScreen> {
           style: Styles.textStyles,
         ),
       ),
-      body: GoogleMap(
-        mapType: MapType.normal,
-        onMapCreated: mapViewModel.onMapCreated,
-        initialCameraPosition: mapViewModel.initialCameraPosition,
-        myLocationEnabled: true,
-        myLocationButtonEnabled: true,
-        markers: mapViewModel.getCurrentMarker(),
+      body: Stack(
+        children: [
+          if (mapViewModel.errorMessages.isNotEmpty) ...[
+            Text(mapViewModel.errorMessages.join(' ')),
+          ] else ...[
+            GoogleMap(
+              mapType: MapType.normal,
+              onMapCreated: mapViewModel.onMapCreated,
+              initialCameraPosition: mapViewModel.initialCameraPosition,
+              myLocationEnabled: true,
+              myLocationButtonEnabled: true,
+              markers: mapViewModel.getCurrentMarker(),
+            ),
+          ]
+        ],
       ),
     );
   }
