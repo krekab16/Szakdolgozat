@@ -25,34 +25,36 @@ class _MenuState extends State<Menu> {
             decoration: const BoxDecoration(
               color: MyColors.lightBlueColor,
             ),
-            child: Column(
+            child:Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      Text(
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
                         DateFormat(dateFormat).format(DateTime.now()),
-                        textAlign: TextAlign.right,
                         style: Styles.dateTimeText,
+                        textAlign: TextAlign.left,
                       ),
-                    ],
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      Text(
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
                         menu,
-                        textAlign: TextAlign.right,
                         style: Styles.menuTextStyles,
+                        textAlign: TextAlign.left,
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ],
-            ),
+            )
           ),
           DrawerList(home, const Icon(Icons.home),
               () => menuViewModel.navigateToHome(context)),
