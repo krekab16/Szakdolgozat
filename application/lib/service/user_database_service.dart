@@ -23,8 +23,8 @@ class UserDatabaseService {
             .collection('users')
             .doc(userCredential.user!.uid)
             .set(userDTO.toJson());
-        return UserDTO.fromJson(
-            userDTO.toJson(), userCredential.user?.uid ?? '');
+        userDTO.id = userCredential.user?.uid ?? '';
+        return userDTO;
       }
     } on FirebaseException catch (e) {
       throw Exception(e.message);

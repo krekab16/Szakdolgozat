@@ -5,6 +5,7 @@ import '../utils/colors.dart';
 import '../utils/styles.dart';
 import '../utils/text_strings.dart';
 import '../viewmodel/home_view_model.dart';
+import 'menu_ui.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
@@ -39,22 +39,22 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: Column(
-                children: [
-                  if(homeViewModel.errorMessages.isNotEmpty)...[
-                    Text(homeViewModel.errorMessages.join(' ')),
-                  ]else...[
-                    Column(
-                      children: homeViewModel.homeModel.events
-                          .map((event) => EventBox(event))
-                          .toList(),
-                    )
-                  ]
+                  children: [
+                if (homeViewModel.errorMessages.isNotEmpty)...[
+                  Text(homeViewModel.errorMessages.join(' ')),
+                ] else ...[
+                  Column(
+                    children: homeViewModel.homeModel.events
+                        .map((event) => EventBox(event))
+                        .toList(),
+                  )
                 ]
-              ),
+              ]),
             ),
           ],
         ),
       ),
+      drawer: const Menu(),
     );
   }
 }

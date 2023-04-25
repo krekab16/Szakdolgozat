@@ -35,4 +35,13 @@ String removeParticipation = "Részvétel eltávolítása";
 String participationErrorMessage = "A részvétel meghaladja a szabad helyek számát!";
 String currentUserNotParticipatingErrorMessage = "Ön még nem vesz részt ezen az eseményen!";
 String loading = "Betöltés...";
+String dateFormat = "yyyy-MM-dd";
+String menu = "Menü";
+String home = "Események";
+String favourites = "Kedvencek";
+String participatedEvents = "Eseményeim";
+String created = "Létrehozott";
+String newEvent = "Új esemény";
+String profile = "Profil";
+String logout = "Kijelentkezés";
 

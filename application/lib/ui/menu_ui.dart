@@ -56,26 +56,18 @@ class _MenuState extends State<Menu> {
           ),
           DrawerList(home, const Icon(Icons.home),
               () => menuViewModel.navigateToHome(context)),
-          DrawerList(favourites, const Icon(Icons.favorite), () {
-            menuViewModel.navigateToFavourites(context);
-          }),
+          DrawerList(favourites, const Icon(Icons.favorite),
+              () => menuViewModel.navigateToFavourites(context)),
           DrawerList(profile, const Icon(Icons.account_circle),
               () => menuViewModel.navigateToProfile(context)),
-          DrawerList(
-            participatedEvents,
-            const Icon(Icons.event_rounded),
-            () => menuViewModel.navigateToParticipatedEvent(context),
-          ),
+          DrawerList(participatedEvents, const Icon(Icons.event_rounded),
+              () => menuViewModel.navigateToParticipatedEvent(context)),
           DrawerList(newEvent, const Icon(Icons.fiber_new),
               () => menuViewModel.navigateToNewEvent(context)),
-          DrawerList(
-            created,
-            const Icon(Icons.create),
-            () => menuViewModel.navigateToCreatedEvent(context),
-          ),
-          DrawerList(logout, const Icon(Icons.logout), () {
-            menuViewModel.logOut(context);
-          }),
+          DrawerList(created, const Icon(Icons.create),
+              () => menuViewModel.navigateToCreatedEvent(context)),
+          DrawerList(logout, const Icon(Icons.logout),
+              () => menuViewModel.logOut(context)),
         ],
       ),
     );
