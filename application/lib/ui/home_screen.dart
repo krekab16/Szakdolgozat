@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<HomeViewModel>(context);
+    final homeViewModel = Provider.of<HomeViewModel>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyColors.lightBlueColor,

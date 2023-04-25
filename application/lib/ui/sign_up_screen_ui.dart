@@ -1,6 +1,7 @@
 import 'package:application/utils/input_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../model/user_model.dart';
 import '../utils/colors.dart';
 import '../utils/my_button.dart';
 import '../utils/styles.dart';
@@ -21,6 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final signUpViewModel = Provider.of<SignUpViewModel>(context);
+    final userModel = Provider.of<UserModel>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyColors.lightBlueColor,
@@ -43,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Icons.account_circle,
                       ),
                       fullName,
-                      (name) => signUpViewModel.setName(name),
+                      (name) => {userModel.name = name},
                       (value) => signUpViewModel.validateName(value!),
                     ),
                     InputBox(
@@ -51,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Icons.account_circle,
                       ),
                       userName,
-                      (userName) => signUpViewModel.setUserName(userName),
+                      (userName) => {userModel.username = userName},
                       (value) => signUpViewModel.validateUserName(value!),
                     ),
                     InputBox(
@@ -59,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Icons.mail,
                       ),
                       email,
-                      (email) => signUpViewModel.setEmail(email),
+                      (email) => {userModel.email = email},
                       (value) => signUpViewModel.validateEmail(value!),
                     ),
                     InputBox(
@@ -67,7 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Icons.vpn_key,
                       ),
                       password,
-                      (password) => signUpViewModel.setPassword(password),
+                      (password) => {userModel.password = password},
                       (value) => signUpViewModel.validatePassword(value!),
                     ),
                     Text(
@@ -79,9 +81,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       value: true,
                       groupValue: _isOrganizerUser,
                       onChanged: (value) {
-                        signUpViewModel.setOrganizer(value!);
+                        userModel.isOrganizer = true;
                         setState(() {
-                          _isOrganizerUser = value;
+                          _isOrganizerUser = value!;
                         });
                       },
                     ),
@@ -90,9 +92,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       value: false,
                       groupValue: _isOrganizerUser,
                       onChanged: (value) {
-                        signUpViewModel.setOrganizer(value!);
+                        userModel.isOrganizer = false;
                         setState(() {
-                          _isOrganizerUser = value;
+                          _isOrganizerUser = value!;
                         });
                       },
                     ),
@@ -101,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: MyButton(signUp, () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
-                          await signUpViewModel.register();
+                          userModel.id = await signUpViewModel.register(userModel);
                           if (signUpViewModel.errorMessages.isEmpty) {
                             signUpViewModel.navigateToHomeScreen(context);
                           } else {

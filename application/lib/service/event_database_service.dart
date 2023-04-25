@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../model/event_dto.dart';
+import '../utils/text_strings.dart';
 
 class EventDatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -7,14 +8,63 @@ class EventDatabaseService {
   Future<List<EventDTO>> getEvents() async {
     try {
       final QuerySnapshot querySnapshot =
-          await _firestore.collection('events').get();
+          await _firestore.collection('events').orderBy('date').get();
       final List<EventDTO> events =
           await Future.wait(querySnapshot.docs.map((doc) async {
         final data = doc.data() as Map<String, dynamic>;
-        final String imageDownloadUrl = data['image'];
-        return EventDTO.fromJson(data, imageDownloadUrl);
+        return EventDTO.fromJson(data, doc.id);
       }).toList());
       return events;
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  Future<void> updateEvent(EventDTO eventDTO) async {
+    try {
+      await _firestore
+          .collection('events')
+          .doc(eventDTO.id)
+          .update(eventDTO.toJson());
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  Future<void> addParticipation(String userId, EventDTO eventDTO) async {
+    try {
+      final DocumentSnapshot docSnapshot =
+          await _firestore.collection('events').doc(eventDTO.id).get();
+      final int participationCount = docSnapshot.get('participationCount');
+      final int stuffLimit = eventDTO.stuffLimit;
+
+      if (participationCount < stuffLimit) {
+        await _firestore.collection('events').doc(eventDTO.id).update({
+          'participationCount': FieldValue.increment(1),
+          'participants': FieldValue.arrayUnion([userId]),
+        });
+      } else {
+        throw Exception(participationErrorMessage);
+      }
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  Future<void> removeParticipation(String userId, EventDTO eventDTO) async {
+    try {
+      final DocumentSnapshot docSnapshot =
+          await _firestore.collection('events').doc(eventDTO.id).get();
+
+      if (userId.isNotEmpty &&
+          docSnapshot.get('participants').contains(userId)) {
+        await _firestore.collection('events').doc(eventDTO.id).update({
+          'participationCount': FieldValue.increment(-1),
+          'participants': FieldValue.arrayRemove([userId])
+        });
+      } else {
+        throw Exception(currentUserNotParticipatingErrorMessage);
+      }
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }

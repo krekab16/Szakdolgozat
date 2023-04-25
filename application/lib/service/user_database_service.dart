@@ -7,7 +7,7 @@ class UserDatabaseService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> addUserToDatabase(UserDTO userDTO) async {
+  Future<UserDTO> addUserToDatabase(UserDTO userDTO) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
           .collection('users')
@@ -23,16 +23,18 @@ class UserDatabaseService {
             .collection('users')
             .doc(userCredential.user!.uid)
             .set(userDTO.toJson());
+        return UserDTO.fromJson(
+            userDTO.toJson(), userCredential.user?.uid ?? '');
       }
     } on FirebaseException catch (e) {
       throw Exception(e.message);
     }
   }
 
-  Future<void> logInUser(UserDTO userDTO) async {
+  Future<UserDTO> logInUser(UserDTO userDTO) async {
     try {
       UserCredential userCredential =
-      await _firebaseAuth.signInWithEmailAndPassword(
+          await _firebaseAuth.signInWithEmailAndPassword(
         email: userDTO.email,
         password: userDTO.password,
       );
@@ -41,8 +43,8 @@ class UserDatabaseService {
           .doc(userCredential.user!.uid)
           .get();
       if (userSnapshot.exists && userSnapshot.data() != null) {
-        UserDTO userDTO =
-        UserDTO.fromJson(userSnapshot.data() as Map<String, dynamic>);
+        return UserDTO.fromJson(
+            userSnapshot.data() as Map<String, dynamic>, userSnapshot.id);
       } else {
         throw Exception(userNotFoundErrorMessage);
       }
@@ -59,4 +61,14 @@ class UserDatabaseService {
     }
   }
 
+  Future<void> updateUser(UserDTO userDTO) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(userDTO.id)
+          .update({'favorites': userDTO.favorites});
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.message);
+    }
+  }
 }

@@ -5,32 +5,13 @@ import '../utils/route_constants.dart';
 import '../utils/text_strings.dart';
 
 class LogInViewModel with ChangeNotifier {
-  final UserModel _user = UserModel(
-      name: '', username: '', email: '', password: '', isOrganizer: false);
   final UserDatabaseService service = UserDatabaseService();
   List<String> errorMessages = [];
 
-  String getEmail() {
-    return _user.email;
-  }
-
-  String getPassword() {
-    return _user.password;
-  }
-
-  void setEmail(String email) {
-    _user.email = email;
-    notifyListeners();
-  }
-
-  void setPassword(String password) {
-    _user.password = password;
-    notifyListeners();
-  }
-
-  Future<void> login() async {
+  Future<String> login(UserModel userModel) async {
+    UserModel newUser = UserModel.createEmpty();
     try {
-      await service.logInUser(_user.toDTO());
+      newUser  = UserModel.fromDTO(await service.logInUser(userModel.toDTO()));
       errorMessages = [];
     } catch (e) {
       if (e.toString().isNotEmpty) {
@@ -40,6 +21,7 @@ class LogInViewModel with ChangeNotifier {
       }
     }
     notifyListeners();
+    return newUser.id;
   }
 
   void navigateToHome(BuildContext context) {
