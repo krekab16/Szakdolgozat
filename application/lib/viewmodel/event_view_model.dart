@@ -82,4 +82,6 @@ class EventViewModel with ChangeNotifier {
   void navigateBack(BuildContext context) {
     Navigator.pop(context);
   }
+
+
 }
