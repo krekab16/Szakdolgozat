@@ -26,7 +26,8 @@ class UserModel with ChangeNotifier {
         username: '',
         email: '',
         password: '',
-        isOrganizer: false, id: '',
+        isOrganizer: false,
+        id: '',
         favorites: []);
   }
 
