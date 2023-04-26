@@ -21,7 +21,7 @@ class _LogInScreen extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     final logInViewModel = Provider.of<LogInViewModel>(context);
-    final userModel = Provider.of<UserModel>(context);
+    var userModel = Provider.of<UserModel>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -64,7 +64,7 @@ class _LogInScreen extends State<LogInScreen> {
                       child: MyButton(logIn, () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
-                          userModel.id = await logInViewModel.login(userModel);
+                          userModel.updateUser(await logInViewModel.login(userModel));
                           if (logInViewModel.errorMessages.isEmpty) {
                             logInViewModel.navigateToHome(context);
                           } else {

@@ -71,4 +71,12 @@ class UserDatabaseService {
       throw Exception(e.message);
     }
   }
+
+  Future<void> logOut() async {
+    try {
+      await _firebaseAuth.signOut();
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
 }

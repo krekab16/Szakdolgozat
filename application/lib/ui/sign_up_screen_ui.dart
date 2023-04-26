@@ -79,23 +79,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     RadioListTile(
                       title: Text(radioTitleYes),
                       value: true,
-                      groupValue: _isOrganizerUser,
+                      groupValue: userModel.isOrganizer,
                       onChanged: (value) {
-                        userModel.isOrganizer = true;
-                        setState(() {
-                          _isOrganizerUser = value!;
-                        });
+                        userModel.updateOrganiserState(value ?? false);
                       },
                     ),
                     RadioListTile(
                       title: Text(radioTitleNo),
                       value: false,
-                      groupValue: _isOrganizerUser,
+                      groupValue: userModel.isOrganizer,
                       onChanged: (value) {
-                        userModel.isOrganizer = false;
-                        setState(() {
-                          _isOrganizerUser = value!;
-                        });
+                        userModel.updateOrganiserState(value ?? false);
                       },
                     ),
                     Padding(

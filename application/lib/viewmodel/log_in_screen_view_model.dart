@@ -8,10 +8,10 @@ class LogInViewModel with ChangeNotifier {
   final UserDatabaseService service = UserDatabaseService();
   List<String> errorMessages = [];
 
-  Future<String> login(UserModel userModel) async {
+  Future<UserModel> login(UserModel userModel) async {
     UserModel newUser = UserModel.createEmpty();
     try {
-      newUser  = UserModel.fromDTO(await service.logInUser(userModel.toDTO()));
+      newUser = UserModel.fromDTO(await service.logInUser(userModel.toDTO()));
       errorMessages = [];
     } catch (e) {
       if (e.toString().isNotEmpty) {
@@ -21,7 +21,7 @@ class LogInViewModel with ChangeNotifier {
       }
     }
     notifyListeners();
-    return newUser.id;
+    return newUser;
   }
 
   void navigateToHome(BuildContext context) {
