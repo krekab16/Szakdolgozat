@@ -29,49 +29,51 @@ class _MenuState extends State<Menu> {
             ),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      Text(
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
                         DateFormat(dateFormat).format(DateTime.now()),
-                        textAlign: TextAlign.right,
+                        textAlign: TextAlign.left,
                         style: Styles.dateTimeText,
                       ),
-                    ],
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    children: [
-                      Text(
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
                         menu,
-                        textAlign: TextAlign.right,
+                        textAlign: TextAlign.left,
                         style: Styles.menuTextStyles,
                       ),
-                    ],
+                    ),
                   ),
-                ),
-                DrawerList(home, const Icon(Icons.home),
-                    () => menuViewModel.navigateToHome(context)),
-                DrawerList(favourites, const Icon(Icons.favorite),
-                    () => menuViewModel.navigateToFavourites(context)),
-                DrawerList(profile, const Icon(Icons.account_circle),
-                    () => menuViewModel.navigateToProfile(context)),
-                if (userModel.isOrganizer) ...[
-                  DrawerList(participatedEvents, const Icon(Icons.event_rounded),
-                      () => menuViewModel.navigateToParticipatedEvent(context)),
-                  DrawerList(newEvent, const Icon(Icons.fiber_new),
-                      () => menuViewModel.navigateToNewEvent(context)),
-                  DrawerList(created, const Icon(Icons.create),
-                      () => menuViewModel.navigateToCreatedEvent(context)),
-                ],
-                DrawerList(logout, const Icon(Icons.logout),
-                    () => menuViewModel.logOut(context)),
+                )
               ],
             ),
           ),
+          DrawerList(home, const Icon(Icons.home),
+              () => menuViewModel.navigateToHome(context)),
+          DrawerList(favourites, const Icon(Icons.favorite),
+              () => menuViewModel.navigateToFavourites(context)),
+          DrawerList(profile, const Icon(Icons.account_circle),
+              () => menuViewModel.navigateToProfile(context)),
+          if (userModel.isOrganizer) ...[
+            DrawerList(participatedEvents, const Icon(Icons.event_rounded),
+                () => menuViewModel.navigateToParticipatedEvent(context)),
+            DrawerList(newEvent, const Icon(Icons.fiber_new),
+                () => menuViewModel.navigateToNewEvent(context)),
+            DrawerList(created, const Icon(Icons.create),
+                () => menuViewModel.navigateToCreatedEvent(context)),
+          ],
+          DrawerList(logout, const Icon(Icons.logout),
+              () => menuViewModel.logOut(context)),
         ],
       ),
     );
