@@ -64,7 +64,7 @@ class _LogInScreen extends State<LogInScreen> {
                       child: MyButton(logIn, () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
-                          userModel = await logInViewModel.login(userModel);
+                          userModel.updateUser(await logInViewModel.login(userModel));
                           if (logInViewModel.errorMessages.isEmpty) {
                             logInViewModel.navigateToHome(context);
                           } else {

@@ -54,4 +54,20 @@ class UserModel with ChangeNotifier {
       id: userDTO.id,
     );
   }
+
+  void updateUser(UserModel newModel) {
+    this.id = newModel.id;
+    this.name = newModel.name;
+    this.username = newModel.username;
+    this.email = newModel.email;
+    this.password = newModel.password;
+    this.isOrganizer = newModel.isOrganizer;
+    this.favorites = newModel.favorites;
+    notifyListeners();
+  }
+
+  void updateOrganiserState(bool isOrganiser) {
+    this.isOrganizer = isOrganiser;
+    notifyListeners();
+  }
 }
