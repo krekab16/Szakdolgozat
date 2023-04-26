@@ -72,23 +72,6 @@ class UserDatabaseService {
     }
   }
 
-  Future<UserDTO?> getUserProfile(UserDTO userDTO) async {
-    try {
-      DocumentSnapshot userSnapshot =
-          await _firestore.collection('users').doc(userDTO.id).get();
-      if (userSnapshot.exists) {
-        Map<String, dynamic>? data =
-            userSnapshot.data() as Map<String, dynamic>?;
-        if (data != null) {
-          return UserDTO.fromJson(data, userSnapshot.id);
-        }
-      }
-      throw Exception(noUserFoundErrorMessage);
-    } on FirebaseException catch (e) {
-      throw Exception(e.message);
-    }
-  }
-
   Future<void> logOut() async {
     try {
       await _firebaseAuth.signOut();

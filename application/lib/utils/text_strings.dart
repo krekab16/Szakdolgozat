@@ -44,4 +44,3 @@ String created = "Létrehozott";
 String newEvent = "Új esemény";
 String profile = "Profil";
 String logout = "Kijelentkezés";
-String noUserFoundErrorMessage = "Nincs ilyen felhasználó!";
