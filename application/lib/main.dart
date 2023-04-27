@@ -14,6 +14,7 @@ import 'package:application/viewmodel/favourite_event_screen_view_model.dart';
 import 'package:application/viewmodel/home_view_model.dart';
 import 'package:application/viewmodel/log_in_screen_view_model.dart';
 import 'package:application/viewmodel/menu_view_model.dart';
+import 'package:application/viewmodel/participated_event_view_model.dart';
 import 'package:application/viewmodel/sign_up_screen_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => UserModel.createEmpty()),
         ChangeNotifierProvider(create: (_) => MenuViewModel()),
         ChangeNotifierProvider(create: (_) => FavouriteEventViewModel()),
+        ChangeNotifierProvider(create: (_) => ParticipatedEventViewModel()),
+
       ],
       child: MaterialApp(
         title: appName,
