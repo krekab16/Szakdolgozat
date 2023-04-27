@@ -58,6 +58,7 @@ class _MyAppState extends State<MyApp> {
           homeRoute: (context) => ChangeNotifierProvider(
               create: (context) => HomeViewModel(), child: const HomeScreen()),
           profileRoute: (context) => const ProfileScreen(),
+          favouriteEventsRoute: (context) => const FavouriteEventScreen(),
           newEventRoute: (context) => const NewEventScreen(),
           participatedEventRoute: (context) => const ParticipatedEventScreen(),
           createdEventRoute: (context) => const CreatedEventScreen(),

@@ -72,6 +72,32 @@ class UserDatabaseService {
     }
   }
 
+  Future<UserDTO> getUserProfile(String userId) async {
+    try {
+      DocumentSnapshot userSnapshot =
+          await _firestore.collection('users').doc(userId).get();
+      if (userSnapshot.exists) {
+        Map<String, dynamic>? data =
+            userSnapshot.data() as Map<String, dynamic>?;
+        if (data != null) {
+          return UserDTO.fromJson(data, userSnapshot.id);
+        }
+      }
+      throw Exception(noUserFoundErrorMessage);
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
+  Future<void> updateUserProfile(UserDTO userDTO) async {
+    try {
+      DocumentReference docRef = _firestore.collection('users').doc(userDTO.id);
+      await docRef.set(userDTO.toJson(), SetOptions(merge: true));
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
   Future<void> logOut() async {
     try {
       await _firebaseAuth.signOut();
