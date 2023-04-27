@@ -28,12 +28,12 @@ class MenuViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void navigateToProfile(BuildContext context, UserModel userModel) {
+  void navigateToProfile(BuildContext context, String userId) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
-          create: (context) => ProfileViewModel()..fetchUserProfile(userModel),
+          create: (context) => ProfileViewModel()..fetchUserProfile(userId),
           child: const ProfileScreen(),
         ),
       ),

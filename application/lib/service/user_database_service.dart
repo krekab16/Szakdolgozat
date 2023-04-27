@@ -72,10 +72,10 @@ class UserDatabaseService {
     }
   }
 
-  Future<UserDTO> getUserProfile(UserDTO userDTO) async {
+  Future<UserDTO> getUserProfile(String userId) async {
     try {
       DocumentSnapshot userSnapshot =
-          await _firestore.collection('users').doc(userDTO.id).get();
+          await _firestore.collection('users').doc(userId).get();
       if (userSnapshot.exists) {
         Map<String, dynamic>? data =
             userSnapshot.data() as Map<String, dynamic>?;

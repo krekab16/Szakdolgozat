@@ -7,22 +7,42 @@ import '../utils/text_strings.dart';
 class ProfileViewModel with ChangeNotifier {
   final UserDatabaseService service = UserDatabaseService();
 
-  UserModel userModel = UserModel.createEmpty();
+  UserModel userProfile = UserModel.createEmpty();
 
   List<String> errorMessages = [];
 
-  UserModel getProfile() {
-    return userModel;
+  String getProfileName() {
+    return userProfile.name;
   }
 
-  setUserModel(UserDTO user) {
-    userModel = UserModel.fromDTO(user);
+  String getProfileUserName() {
+    return userProfile.username;
+  }
+
+  String getProfilePassword() {
+    return userProfile.password;
+  }
+
+  void setProfileName(String name) {
+    userProfile.name = name;
+  }
+
+  void setProfileUserName(String username) {
+    userProfile.username = username;
+  }
+
+  void setProfilePassword(String password) {
+    userProfile.password = password;
+  }
+
+  void setUserModel(UserDTO user) {
+    userProfile = UserModel.fromDTO(user);
     notifyListeners();
   }
 
-  Future<void> fetchUserProfile(UserModel userModel) async {
+  Future<void> fetchUserProfile(String userId) async {
     try {
-      final userProfile = await service.getUserProfile(userModel.toDTO());
+      final userProfile = await service.getUserProfile(userId);
       setUserModel(userProfile);
       errorMessages = [];
     } catch (e) {
@@ -37,7 +57,7 @@ class ProfileViewModel with ChangeNotifier {
 
   Future<void> updateUser() async {
     try {
-      await service.updateUserProfile(userModel.toDTO());
+      await service.updateUserProfile(userProfile.toDTO());
       errorMessages = [];
     } catch (e) {
       if (e.toString().isNotEmpty) {

@@ -39,29 +39,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 decoration: InputDecoration(labelText: fullName),
                 enabled: true,
                 controller: TextEditingController(
-                  text: profileViewModel.getProfile().name,
+                  text: profileViewModel.getProfileName(),
                 ),
                 onChanged: (value) =>
-                    profileViewModel.getProfile().name = value,
+                    profileViewModel.setProfileUserName(value),
                 validator: (value) => profileViewModel.validateName(value!),
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: userName),
                 enabled: true,
                 controller: TextEditingController(
-                  text: profileViewModel.getProfile().username,
+                  text: profileViewModel.getProfileUserName(),
                 ),
                 onChanged: (value) =>
-                    profileViewModel.getProfile().username = value,
+                    profileViewModel.setProfileUserName(value),
                 validator: (value) => profileViewModel.validateUserName(value!),
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: password),
                 controller: TextEditingController(
-                  text: profileViewModel.getProfile().password,
+                  text: profileViewModel.getProfilePassword(),
                 ),
                 onChanged: (value) =>
-                    profileViewModel.getProfile().password = value,
+                    profileViewModel.setProfilePassword(value),
                 validator: (value) => profileViewModel.validatePassword(value!),
               ),
               Padding(
