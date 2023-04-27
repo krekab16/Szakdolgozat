@@ -60,7 +60,6 @@ class _MyAppState extends State<MyApp> {
           profileRoute: (context) => const ProfileScreen(),
           newEventRoute: (context) => const NewEventScreen(),
           participatedEventRoute: (context) => const ParticipatedEventScreen(),
-          favouriteEventsRoute: (context) => const FavouriteEventScreen(),
           createdEventRoute: (context) => const CreatedEventScreen(),
         },
       ),
