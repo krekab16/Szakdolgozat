@@ -28,7 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.location_on),
-            onPressed: () {},
+            onPressed: () {
+              homeViewModel.navigateToMapScreen(context);
+            },
           ),
         ],
       ),
