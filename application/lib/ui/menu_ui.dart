@@ -66,7 +66,7 @@ class _MenuState extends State<Menu> {
               () => menuViewModel.navigateToProfile(context, userModel.id)),
           if (userModel.isOrganizer) ...[
             DrawerList(participatedEvents, const Icon(Icons.event_rounded),
-                () => menuViewModel.navigateToParticipatedEvent(context)),
+                () => menuViewModel.navigateToParticipatedEvent(context, userModel.id)),
             DrawerList(newEvent, const Icon(Icons.fiber_new),
                 () => menuViewModel.navigateToNewEvent(context)),
             DrawerList(created, const Icon(Icons.create),

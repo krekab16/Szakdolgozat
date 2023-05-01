@@ -1,10 +1,11 @@
 import 'package:application/viewmodel/profile_view_model.dart';
+import 'package:application/viewmodel/participated_event_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../service/user_database_service.dart';
 import '../ui/favourite_event_screen_ui.dart';
-import '../model/user_model.dart';
 import '../ui/profile_screen_ui.dart';
+import '../ui/participated_event_screen_ui.dart';
 import '../utils/route_constants.dart';
 import '../utils/text_strings.dart';
 import 'favourite_event_screen_view_model.dart';
@@ -44,8 +45,17 @@ class MenuViewModel with ChangeNotifier {
     Navigator.pushNamed(context, homeRoute);
   }
 
-  void navigateToParticipatedEvent(BuildContext context) {
-    Navigator.pushNamed(context, participatedEventRoute);
+  void navigateToParticipatedEvent(BuildContext context, String userId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+          create: (context) =>
+          ParticipatedEventViewModel()..fetchParticipatedEvent(userId),
+          child: const ParticipatedEventScreen(),
+        ),
+      ),
+    );
   }
 
   void navigateToFavourites(BuildContext context, String userId) {
