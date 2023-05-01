@@ -50,7 +50,6 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => ParticipatedEventViewModel()),
         ChangeNotifierProvider(create: (_) => NewEventScreenViewModel()),
         ChangeNotifierProvider(create: (_) => CreatedEventViewModel()),
-
       ],
       child: MaterialApp(
         title: appName,

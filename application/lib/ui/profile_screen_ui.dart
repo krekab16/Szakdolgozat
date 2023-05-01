@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   text: profileViewModel.getProfileName(),
                 ),
                 onChanged: (value) =>
-                    profileViewModel.setProfileUserName(value),
+                    profileViewModel.setProfileName(value),
                 validator: (value) => profileViewModel.validateName(value!),
               ),
               TextFormField(
