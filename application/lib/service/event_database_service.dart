@@ -23,6 +23,34 @@ class EventDatabaseService {
     }
   }
 
+  Future<List<EventDTO>> getEventsForToday() async {
+    try {
+      DateTime startOfDay(DateTime dateTime) {
+        return DateTime(dateTime.year, dateTime.month, dateTime.day, 0, 0, 0);
+      }
+
+      DateTime endOfDay(DateTime dateTime) {
+        return DateTime(
+            dateTime.year, dateTime.month, dateTime.day, 23, 59, 59);
+      }
+
+      final QuerySnapshot querySnapshot = await _firestore
+          .collection('events')
+          .where('date',
+              isGreaterThanOrEqualTo: startOfDay(DateTime.now()),
+              isLessThanOrEqualTo: endOfDay(DateTime.now()))
+          .get();
+      final List<EventDTO> events =
+          await Future.wait(querySnapshot.docs.map((doc) async {
+        final data = doc.data() as Map<String, dynamic>;
+        return EventDTO.fromJson(data, doc.id);
+      }).toList());
+      return events;
+    } on FirebaseException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
   Future<void> updateEvent(EventDTO eventDTO) async {
     try {
       await _firestore

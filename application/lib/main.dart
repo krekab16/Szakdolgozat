@@ -1,7 +1,7 @@
-import 'package:application/ui/created_event_screen_ui.dart';
 import 'package:application/ui/favourite_event_screen_ui.dart';
 import 'package:application/ui/home_screen.dart';
 import 'package:application/ui/log_in_screen_ui.dart';
+import 'package:application/ui/map_screen_ui.dart';
 import 'package:application/ui/new_event_screen_ui.dart';
 import 'package:application/ui/participated_event_screen_ui.dart';
 import 'package:application/ui/profile_screen_ui.dart';
@@ -52,6 +52,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => CreatedEventViewModel()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: appName,
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -67,7 +68,7 @@ class _MyAppState extends State<MyApp> {
           favouriteEventsRoute: (context) => const FavouriteEventScreen(),
           newEventRoute: (context) => const NewEventScreen(),
           participatedEventRoute: (context) => const ParticipatedEventScreen(),
-          createdEventRoute: (context) => const CreatedEventScreen(),
+          mapRoute: (context) => const MapScreen(),
         },
       ),
     );

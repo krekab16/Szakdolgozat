@@ -3,6 +3,7 @@ import 'package:application/model/event_model.dart';
 import 'package:flutter/foundation.dart';
 import '../service/event_database_service.dart';
 import '../utils/text_strings.dart';
+import 'package:flutter/material.dart';
 import 'dart:io';
 
 class NewEventScreenViewModel with ChangeNotifier {
@@ -64,9 +65,7 @@ class NewEventScreenViewModel with ChangeNotifier {
       await service.addEventToDatabase(userId, _event.toDTO(), imageFile);
       errorMessages = [];
     } catch (e) {
-      if (e
-          .toString()
-          .isNotEmpty) {
+      if (e.toString().isNotEmpty) {
         errorMessages = [e.toString()];
       } else {
         errorMessages = [standardErrorMessage];
