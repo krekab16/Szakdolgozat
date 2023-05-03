@@ -26,7 +26,6 @@ class MapViewModel with ChangeNotifier {
           permission == LocationPermission.deniedForever) {
         permission = await Geolocator.requestPermission();
       }
-
       if (permission == LocationPermission.whileInUse ||
           permission == LocationPermission.always) {
         getCurrentLocation();
@@ -56,7 +55,6 @@ class MapViewModel with ChangeNotifier {
           },
         );
       }
-
       errorMessages = [];
     } catch (e) {
       if (e.toString().isNotEmpty) {
@@ -94,7 +92,7 @@ class MapViewModel with ChangeNotifier {
 
   Future<void> fetchMarkersFromEventData(BuildContext context) async {
     try {
-      final List<EventDTO> eventDTO = await service.getEventsForToday();
+      final List<EventDTO> eventDTO = await service.getEvents();
       final List<EventModel> eventModels =
           eventDTO.map((dto) => EventModel.fromDTO(dto)).toList();
       Iterable<Future<Marker>> futureList =
