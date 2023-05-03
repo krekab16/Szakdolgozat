@@ -4,10 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   geolocator_windows
-<<<<<<< HEAD
   permission_handler_windows
-=======
->>>>>>> 4ba582e (Platform opciok)
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

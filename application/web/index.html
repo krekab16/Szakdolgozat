@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFKF4VW7FXNfmvSW_XnEzupQzGkLIFLlE"></script>
   <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
@@ -38,11 +40,13 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+  <script type="text/javascript">
+    window.flutterWebRenderer = "html";
+  </script>
 </head>
 <body>
   <script>
     window.addEventListener('load', function(ev) {
-      // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
@@ -56,6 +60,9 @@
   </script>
 
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+
+
   <script>
       var firebaseConfig = {
         apiKey: "AIzaSyAHU3BOg5li4CaZxgBSufT26DOgBlIKhcU",
@@ -68,7 +75,6 @@
         measurementId: "G-S49F583NNX",
       };
 
-      // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
     </script>
 </body>
