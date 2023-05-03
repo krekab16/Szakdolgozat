@@ -1,37 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
+import '../model/event_dto.dart';
 import '../model/event_model.dart';
-import '../model/marker_info_model.dart';
 import '../service/event_database_service.dart';
+import '../ui/event_screen_ui.dart';
+import '../utils/route_constants.dart';
 import '../utils/text_strings.dart';
 import 'package:geocoding/geocoding.dart';
 
 class MapViewModel with ChangeNotifier {
-  final double _initialZoomValue = 11.0;
-
-  late LatLng _center = const LatLng(46.254633422682765, 20.157634687339225);
   late GoogleMapController mapController;
+  final double _initialZoomValue = 11.0;
+  late LatLng _center = const LatLng(46.254633422682765, 20.157634687339225);
+  Marker? _currentMarker;
+  late Set<Marker> _markers = {};
   final EventDatabaseService service = EventDatabaseService();
   List<String> errorMessages = [];
 
-  Future<Set<MarkerInfoModel>> initializeMap() async {
-    if (!(await isLocationPermitted())) {
-      errorMessages.add(permissionErrorMessage);
-    } else {
-      errorMessages = [];
-      await fetchCurrentLocation();
-      Set<MarkerInfoModel> eventLocations = await fetchMarkersFromEventData();
-      return eventLocations;
-    }
-    return <MarkerInfoModel>{};
-  }
-
-  Future<bool> isLocationPermitted() async {
+  Future<void> requestLocationPermission(BuildContext context) async {
     try {
-      final permission = await Geolocator.checkPermission();
-      return (permission != LocationPermission.denied &&
-          permission != LocationPermission.deniedForever);
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        permission = await Geolocator.requestPermission();
+      }
+
+      if (permission == LocationPermission.whileInUse ||
+          permission == LocationPermission.always) {
+        getCurrentLocation();
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(permissionRequiredErrorMessage),
+              content: Text(permissionErrorMessage),
+              actions: [
+                TextButton(
+                  child: Text(cancel),
+                  onPressed: () {
+                    Navigator.pushNamed(context, homeRoute);
+                  },
+                ),
+                TextButton(
+                  child: Text(grantPermission),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    openAppSettings();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+
+      errorMessages = [];
     } catch (e) {
       if (e.toString().isNotEmpty) {
         errorMessages = [e.toString()];
@@ -39,14 +65,23 @@ class MapViewModel with ChangeNotifier {
         errorMessages = [standardErrorMessage];
       }
     }
-    return false;
+    notifyListeners();
   }
 
-  Future<void> fetchCurrentLocation() async {
+  Future<void> getCurrentLocation() async {
     try {
       final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+        desiredAccuracy: LocationAccuracy.low,
+      );
       _center = LatLng(position.latitude, position.longitude);
+      _currentMarker = Marker(
+        markerId: MarkerId(currentPosition),
+        position: _center,
+        infoWindow: InfoWindow(
+          title: currentPosition,
+        ),
+      );
+      errorMessages = [];
     } catch (e) {
       if (e.toString().isNotEmpty) {
         errorMessages = [e.toString()];
@@ -54,20 +89,37 @@ class MapViewModel with ChangeNotifier {
         errorMessages = [standardErrorMessage];
       }
     }
+    notifyListeners();
   }
 
-  Future<Set<MarkerInfoModel>> fetchMarkersFromEventData() async {
+  Future<void> fetchMarkersFromEventData(BuildContext context) async {
     try {
-      final eventModels = (await service.getEvents())
-          .map((dto) => EventModel.fromDTO(dto))
-          .toList();
-      var futureList = eventModels.map((var eventData) async {
-        final locations = await locationFromAddress(eventData.address);
-        return MarkerInfoModel(
-            eventData,
-            LatLng(locations.first.latitude, locations.first.longitude));
+      final List<EventDTO> eventDTO = await service.getEventsForToday();
+      final List<EventModel> eventModels =
+          eventDTO.map((dto) => EventModel.fromDTO(dto)).toList();
+      Iterable<Future<Marker>> futureList =
+          eventModels.map((EventModel eventData) async {
+        List<Location> locations = await locationFromAddress(eventData.address);
+        LatLng latLng =
+            LatLng(locations.first.latitude, locations.first.longitude);
+        return Marker(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EventScreen(eventData),
+              ),
+            );
+          },
+          markerId: MarkerId(eventData.id),
+          position: latLng,
+          infoWindow: InfoWindow(
+            title: eventData.name,
+          ),
+        );
       }).toSet();
-      return (await Future.wait(futureList)).toSet();
+      _markers = (await Future.wait(futureList)).toSet();
+      errorMessages = [];
     } catch (e) {
       if (e.toString().isNotEmpty) {
         errorMessages = [e.toString()];
@@ -75,7 +127,7 @@ class MapViewModel with ChangeNotifier {
         errorMessages = [standardErrorMessage];
       }
     }
-    return <MarkerInfoModel>{};
+    notifyListeners();
   }
 
   void onMapCreated(GoogleMapController controller) {
@@ -86,4 +138,11 @@ class MapViewModel with ChangeNotifier {
         target: _center,
         zoom: _initialZoomValue,
       );
+
+  Set<Marker> getCurrentMarker() {
+    if (_currentMarker != null) {
+      _markers = _markers..add(_currentMarker!);
+    }
+    return _markers;
+  }
 }

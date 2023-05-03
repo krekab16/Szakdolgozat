@@ -24,7 +24,7 @@ class _StartScreen extends State<StartScreen> {
         child: Container(
           padding: const EdgeInsets.all(10),
           margin:
-              const EdgeInsets.only(left: 20, top: 90, right: 20, bottom: 90),
+              const EdgeInsets.only(left: 20, top: 250, right: 20, bottom: 90),
           child: Column(
             children: [
               Row(children: [
