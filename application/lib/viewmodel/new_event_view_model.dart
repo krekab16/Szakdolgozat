@@ -3,7 +3,6 @@ import 'package:application/model/event_model.dart';
 import 'package:flutter/foundation.dart';
 import '../service/event_database_service.dart';
 import '../utils/text_strings.dart';
-import 'package:flutter/material.dart';
 import 'dart:io';
 
 class NewEventScreenViewModel with ChangeNotifier {
@@ -102,14 +101,14 @@ class NewEventScreenViewModel with ChangeNotifier {
   }
 
   String? validateCategory(String? value) {
-    if (value != null && !categories.contains(value)) {
+    if (value == null) {
       return mustSelectCategoryErrorMessage;
     }
     return null;
   }
 
-  String? validateImage(String value) {
-    if (value.isEmpty) {
+  String? validateImage(List<dynamic>? value) {
+    if (value == null) {
       return mustAddImageErrorMessage;
     }
     return null;
