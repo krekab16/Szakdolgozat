@@ -21,50 +21,68 @@ class _StartScreen extends State<StartScreen> {
     return Scaffold(
       backgroundColor: MyColors.backgroundColor,
       body: Center(
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          margin:
-              const EdgeInsets.only(left: 20, top: 250, right: 20, bottom: 90),
-          child: Column(
-            children: [
-              Row(children: [
-                Image(
-                  image: AssetImage(welcomeImage),
-                  height: 160,
-                ),
-                Text(
-                  appName,
-                  style: Styles.welcomeApplicationNameStyle,
-                ),
-              ]),
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: Text(
-                  welcomeTitle,
-                  style: Styles.welcomeTitleStyles,
-                  textAlign: TextAlign.center,
+        child: Column(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(
+                alignment: Alignment.bottomCenter,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                      Image(
+                        image: AssetImage(welcomeImage),
+                        height: 160,
+                      ),
+                      Text(
+                        appName,
+                        style: Styles.welcomeApplicationNameStyle,
+                      ),
+                    ]),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Text(
+                        welcomeTitle,
+                        style: Styles.welcomeTitleStyles,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Text(
+                        welcomeSubTitle,
+                        style: Styles.welcomeSubTitleStyles,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(15),
-                child: Text(
-                  welcomeSubTitle,
-                  style: Styles.welcomeSubTitleStyles,
-                  textAlign: TextAlign.center,
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                alignment: Alignment.topCenter,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: MyButton(
+                          signUp, () => viewModel.navigateToSignUp(context)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: MyButton(
+                          logIn, () => viewModel.navigateToLogIn(context)),
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child:
-                    MyButton(signUp, () => viewModel.navigateToSignUp(context)),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child:
-                    MyButton(logIn, () => viewModel.navigateToLogIn(context)),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
