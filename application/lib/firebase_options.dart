@@ -59,4 +59,14 @@ class DefaultFirebaseOptions {
     iosClientId: '388344003496-e2314hr61apd56irjk7lghfbcnmqkb58.apps.googleusercontent.com',
     iosBundleId: 'com.example.szakdolgozat',
   );
+
+  static const FirebaseOptions macOS = FirebaseOptions(
+    apiKey: 'AIzaSyA1r8IfKYCQsfXoCXvKpZaMqNbQ8yFWoIk',
+    appId: '1:388344003496:ios:6e86fed11c561d4bcd3b9d',
+    messagingSenderId: '388344003496',
+    projectId: 'szakdolgozat-a9498',
+    storageBucket: 'szakdolgozat-a9498.appspot.com',
+    iosClientId: '388344003496-e2314hr61apd56irjk7lghfbcnmqkb58.apps.googleusercontent.com',
+    iosBundleId: 'com.example.szakdolgozat',
+  );
 }
