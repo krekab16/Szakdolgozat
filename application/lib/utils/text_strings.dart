@@ -72,3 +72,7 @@ String permissionRequiredErrorMessage = "Engedély szükséges!";
 String permissionErrorMessage = "Kérem engedélyezze a térkép használatához a helymeghatározást! Amennyiben nem kívánja használni a térképet, nyomjon a Mégse gombra!";
 String cancel = "Mégse";
 String grantPermission = "Engedély megadása";
+String macOSErrorMessage = "Az alapértelmezett Firebase beállítások nincsenek konfigurálva macOS rendszerre - újra konfigurálhatod ezt a FlutterFire CLI újra futtatásával.";
+String windowsErrorMessage = "Az alapértelmezett Firebase beállítások nincsenek konfigurálva windows rendszerre - újra konfigurálhatod ezt a FlutterFire CLI újra futtatásával.";
+String linuxErrorMessage = "Az alapértelmezett Firebase beállítások nincsenek konfigurálva linux rendszerre - újra konfigurálhatod ezt a FlutterFire CLI újra futtatásával.";
+String notSupportedErrorMessage = "Ezen a platformon nem támogatott az alapértelmezett Firebase beállítások.";

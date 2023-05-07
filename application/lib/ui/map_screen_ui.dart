@@ -27,9 +27,9 @@ class _MapScreenState extends State<MapScreen> {
       ),
       body: Stack(
         children: [
-          if (mapViewModel.errorMessages.isNotEmpty) ...[
+          if (mapViewModel.errorMessages.isNotEmpty)...[
             Text(mapViewModel.errorMessages.join(' ')),
-          ] else ...[
+          ] else...[
             GoogleMap(
               mapType: MapType.normal,
               onMapCreated: mapViewModel.onMapCreated,
