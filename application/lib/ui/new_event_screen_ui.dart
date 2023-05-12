@@ -110,8 +110,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
                   ),
                   onChanged: (selectedCategory) =>
                       newEventScreenViewModel.setCategory(selectedCategory!),
-                  validator: (category) =>
-                      newEventScreenViewModel.validateCategory(category),
+                  validator: (selectedCategory) =>
+                      newEventScreenViewModel.validateCategory(selectedCategory),
                 ),
               ),
               Padding(
@@ -173,6 +173,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                     });
                     newEventScreenViewModel.setImage(images![0].path);
                   },
+                  validator: (value) => newEventScreenViewModel.validateImage(value),
                 ),
               ),
               Padding(
