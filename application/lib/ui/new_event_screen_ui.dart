@@ -142,7 +142,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
                   (newEventStuffLimit) => newEventScreenViewModel
                       .setStuffLimit(int.parse(newEventStuffLimit)),
                   (value) =>
-                      newEventScreenViewModel.validateStuffLimit(value!)),
+                      newEventScreenViewModel.validateStuffLimit(value!),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(

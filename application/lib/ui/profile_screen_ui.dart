@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../utils/colors.dart';
 import '../utils/my_button.dart';
+import '../utils/password_input_box.dart';
 import '../utils/styles.dart';
 import '../utils/text_strings.dart';
 
@@ -16,6 +17,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool passwordVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +57,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     profileViewModel.setProfileUserName(value),
                 validator: (value) => profileViewModel.validateUserName(value!),
               ),
-              TextFormField(
-                decoration: InputDecoration(labelText: password),
-                controller: TextEditingController(
-                  text: profileViewModel.getProfilePassword(),
-                ),
-                onChanged: (value) =>
-                    profileViewModel.setProfilePassword(value),
-                validator: (value) => profileViewModel.validatePassword(value!),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      obscureText: passwordVisible,
+                      decoration: InputDecoration(
+                        labelText: password,
+                      ),
+                      controller: TextEditingController(
+                        text: profileViewModel.getProfilePassword(),
+                      ),
+                      onChanged: (value) => profileViewModel.setProfilePassword(value),
+                      validator: (value) => profileViewModel.validatePassword(value!),
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(passwordVisible ? Icons.visibility_off : Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    },
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.all(5),

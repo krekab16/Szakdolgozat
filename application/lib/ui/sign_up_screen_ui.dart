@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../model/user_model.dart';
 import '../utils/colors.dart';
 import '../utils/my_button.dart';
+import '../utils/password_input_box.dart';
 import '../utils/styles.dart';
 import '../utils/text_strings.dart';
 import '../viewmodel/sign_up_screen_view_model.dart';
@@ -17,7 +18,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _isOrganizerUser = true;
+  bool passwordVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -64,14 +65,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       (email) => {userModel.email = email},
                       (value) => signUpViewModel.validateEmail(value!),
                     ),
-                    InputBox(
-                      const Icon(
-                        Icons.vpn_key,
-                      ),
-                      password,
-                      (password) => {userModel.password = password},
-                      (value) => signUpViewModel.validatePassword(value!),
-                    ),
+                    PasswordInputBox(
+                        const Icon(
+                          Icons.vpn_key,
+                        ),
+                        password,
+                            (password) => {userModel.password = password},
+                            (value) => signUpViewModel.validatePassword(value!),
+                        passwordVisible,
+                        IconButton(
+                          icon: Icon(passwordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                          onPressed: () {
+                            setState(
+                                  () {
+                                passwordVisible = !passwordVisible;
+                              },
+                            );
+                          },
+                        )),
                     Text(
                       eventsChechBox,
                       style: Styles.textStyles,
@@ -97,7 +110,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: MyButton(signUp, () async {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState?.save();
-                          userModel.id = await signUpViewModel.register(userModel);
+                          userModel.id =
+                              await signUpViewModel.register(userModel);
                           if (signUpViewModel.errorMessages.isEmpty) {
                             signUpViewModel.navigateToHomeScreen(context);
                           } else {
